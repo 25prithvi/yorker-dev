@@ -58,6 +58,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define BUZZER_PIN_Pin GPIO_PIN_6
+#define BUZZER_PIN_GPIO_Port GPIOE
+#define POWER_MAINS_Pin GPIO_PIN_13
+#define POWER_MAINS_GPIO_Port GPIOC
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
