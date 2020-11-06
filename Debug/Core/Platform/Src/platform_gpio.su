@@ -1,0 +1,2 @@
+platform_gpio.c:28:6:__MX_GPIO_Init	56	static
+platform_gpio.c:121:6:platform_gpio_init	8	static

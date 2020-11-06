@@ -1,0 +1,4 @@
+platform_timer.c:31:6:__MX_TIM2_Init	32	static
+platform_timer.c:76:6:__MX_TIM4_Init	32	static
+platform_timer.c:121:6:__MX_TIM5_Init	32	static
+platform_timer.c:165:6:platform_timer_init	8	static

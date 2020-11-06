@@ -1,0 +1,4 @@
+platform_adc.c:30:6:__MX_ADC1_Init	24	static
+platform_adc.c:80:6:__MX_ADC2_Init	24	static
+platform_adc.c:130:6:__MX_ADC3_Init	24	static
+platform_adc.c:180:6:platform_adc_init	8	static
