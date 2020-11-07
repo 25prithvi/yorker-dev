@@ -12,13 +12,12 @@ SIZE_OUTPUT :=
 OBJDUMP_LIST := 
 EXECUTABLES := 
 OBJS := 
-S_DEPS := 
-S_UPPER_DEPS := 
 C_DEPS := 
 OBJCOPY_BIN := 
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+Core/Display/Src \
 Core/Platform/Src \
 Core/Src \
 Core/Startup \

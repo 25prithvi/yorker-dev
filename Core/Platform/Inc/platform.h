@@ -21,7 +21,8 @@ extern "C" {
 #endif
 
 #include "platform_gpio.h"
-
+#include "stm32f4xx_hal.h"
+#include "display.h"
 //Error
 void Error_Handler(void);
 
@@ -42,9 +43,12 @@ void platform_rtc_init(void);
 
 //UART
 void platform_uart_init(void);
+void lcd_send_cmd(char *pData, int Size);
 
 //Timer
 void platform_timer_init(void);
+void platform_timer_start(void);
+void platform_timer_stop(void);
 
 #ifdef __cplusplus
 }

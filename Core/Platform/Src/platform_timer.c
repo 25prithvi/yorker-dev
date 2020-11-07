@@ -168,3 +168,35 @@ void platform_timer_init()
 	__MX_TIM4_Init();
 	__MX_TIM5_Init();
 }
+
+void platform_timer_start()
+{
+	HAL_TIM_Base_Start_IT(&htim2);
+	HAL_TIM_Base_Start_IT(&htim4);
+}
+
+void platform_timer_stop()
+{
+	HAL_TIM_Base_Stop_IT(&htim2);
+	HAL_TIM_Base_Stop_IT(&htim4);
+}
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+    if (htim->Instance == htim2.Instance)
+    {
+    	keys_action();
+    	//pulse_counter();
+    }
+    if (htim->Instance == htim4.Instance)
+	{
+    	//keypad_status = 0;
+    	//screen_actions();
+   	}
+    else if (htim->Instance == htim5.Instance)
+	{
+    	//keypad_action();
+    	//keypad_status = 1;
+	}
+}
+

@@ -1,4 +1,4 @@
-Core/Platform/Src/platform_gpio.o: ../Core/Platform/Src/platform_gpio.c \
+Core/Display/Src/display.o: ../Core/Display/Src/display.c \
  ../Core/Platform/Inc/platform.h ../Core/Platform/Inc/platform_gpio.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
@@ -32,7 +32,7 @@ Core/Platform/Src/platform_gpio.o: ../Core/Platform/Src/platform_gpio.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Display/Inc/display.h ../Core/Platform/Inc/platform_gpio.h
+ ../Core/Display/Inc/display.h
 
 ../Core/Platform/Inc/platform.h:
 
@@ -103,5 +103,3 @@ Core/Platform/Src/platform_gpio.o: ../Core/Platform/Src/platform_gpio.c \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 
 ../Core/Display/Inc/display.h:
-
-../Core/Platform/Inc/platform_gpio.h:

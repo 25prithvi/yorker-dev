@@ -25,6 +25,8 @@ void platform_start_yorker()
 	 platform_rtc_init();
 	 platform_timer_init();
 
+	 platform_timer_start();
+
 	 while (1)
 	   {
 	     /* USER CODE END WHILE */

@@ -146,3 +146,8 @@ void platform_uart_init()
 	__lcd_uart_init();
 	__rs485_uart_init();
 }
+
+void lcd_send_cmd(char *pData, int Size)
+{
+	HAL_UART_Transmit_IT(&huart7,pData,Size);
+}

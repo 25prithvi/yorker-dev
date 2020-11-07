@@ -1,3 +1,5 @@
+"Core/Display/Src/display.o"
+"Core/Display/Src/keys.o"
 "Core/Platform/Src/platform.o"
 "Core/Platform/Src/platform_adc.o"
 "Core/Platform/Src/platform_gpio.o"
