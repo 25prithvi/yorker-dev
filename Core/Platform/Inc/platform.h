@@ -23,6 +23,10 @@ extern "C" {
 #include "platform_gpio.h"
 #include "stm32f4xx_hal.h"
 #include "display.h"
+
+extern unsigned long makeup_water_added;
+extern unsigned long blowdown_water;
+
 //Error
 void Error_Handler(void);
 

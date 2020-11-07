@@ -15,6 +15,9 @@
 #include "platform.h"
 #include "stm32f4xx_hal.h"
 
+unsigned long makeup_water_added = 0;
+unsigned long blowdown_water = 0;
+
 void platform_start_yorker()
 {
 	 HAL_Init();
@@ -30,7 +33,9 @@ void platform_start_yorker()
 	 while (1)
 	   {
 	     /* USER CODE END WHILE */
-
+		 HAL_Delay(500);
+		 makeup_water_added++;
+		 blowdown_water++;
 	     /* USER CODE BEGIN 3 */
 	   }
 }

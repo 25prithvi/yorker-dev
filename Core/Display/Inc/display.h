@@ -32,9 +32,12 @@ extern enum {
 
 
 extern int current_screen_state;
+extern unsigned char end_char[4];
 extern enum {
 	GOTO_HOME_SCREEN,
 	UPDATE_HOME_SCREEN,
+	SETTINGS_SCREEN,
+	ALARMS_SCREEN,
 }SCREEN_STATE;
 
 
@@ -43,6 +46,9 @@ void keys_action(void);
 
 //DISPLAY
 void screen_actions(void);
+
+//HOME SCREEN
+void homescreen_update(void);
 
 #ifdef __cplusplus
 }

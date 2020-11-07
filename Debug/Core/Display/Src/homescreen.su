@@ -1,0 +1,3 @@
+homescreen.c:22:6:__update_makeup_water_added	40	static
+homescreen.c:34:6:__update_blowdown_water	48	static
+homescreen.c:46:6:homescreen_update	1040	static

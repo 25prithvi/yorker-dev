@@ -191,7 +191,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == htim4.Instance)
 	{
     	//keypad_status = 0;
-    	//screen_actions();
+    	screen_actions();
    	}
     else if (htim->Instance == htim5.Instance)
 	{
