@@ -15,8 +15,17 @@
 #include "platform.h"
 #include "stm32f4xx_hal.h"
 
-unsigned long makeup_water_added = 0;
-unsigned long blowdown_water = 0;
+unsigned int makeup_water_added = 0;
+unsigned int blowdown_water = 0;
+unsigned int chemical1 = 0;
+unsigned int chemical2 = 0;
+uint16_t ph_inlet_water = 0;
+uint16_t ph_plant_water = 0;
+uint16_t tds_inlet_water = 0;
+uint16_t tds_plant_water = 0;
+bool pump1_state = false;
+bool pump2_state = true;
+
 
 void platform_start_yorker()
 {
@@ -36,6 +45,14 @@ void platform_start_yorker()
 		 HAL_Delay(500);
 		 makeup_water_added++;
 		 blowdown_water++;
+		 chemical1++;
+		 chemical2++;
+		 ph_inlet_water++;
+		 ph_plant_water++;
+		 tds_inlet_water++;
+		 tds_plant_water++;
+		 pump1_state = !pump1_state;
+		 pump2_state = !pump2_state;
 	     /* USER CODE BEGIN 3 */
 	   }
 }

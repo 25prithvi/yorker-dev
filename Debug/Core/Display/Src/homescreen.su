@@ -1,3 +1,11 @@
-homescreen.c:22:6:__update_makeup_water_added	40	static
-homescreen.c:34:6:__update_blowdown_water	48	static
-homescreen.c:46:6:homescreen_update	1040	static
+homescreen.c:26:6:__update_makeup_water_added	40	static
+homescreen.c:38:6:__update_blowdown_water	48	static
+homescreen.c:50:6:__update_chemical1	24	static
+homescreen.c:55:6:__update_chemical2	24	static
+homescreen.c:60:6:__update_ph_inlet_water	24	static
+homescreen.c:65:6:__update_ph_plant_water	24	static
+homescreen.c:70:6:__update_tds_inlet_water	24	static
+homescreen.c:75:6:__update_tds_plant_water	24	static
+homescreen.c:80:6:__update_pump1_status	16	static
+homescreen.c:93:6:__update_pump2_status	16	static
+homescreen.c:109:6:homescreen_update	1040	static

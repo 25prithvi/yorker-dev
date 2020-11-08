@@ -23,9 +23,19 @@ extern "C" {
 #include "platform_gpio.h"
 #include "stm32f4xx_hal.h"
 #include "display.h"
+#include "stdbool.h"
 
-extern unsigned long makeup_water_added;
-extern unsigned long blowdown_water;
+extern unsigned int makeup_water_added;
+extern unsigned int blowdown_water;
+extern unsigned int chemical1;
+extern unsigned int chemical2;
+extern uint16_t ph_inlet_water;
+extern uint16_t ph_plant_water;
+extern uint16_t tds_inlet_water;
+extern uint16_t tds_plant_water;
+extern bool pump1_state;
+extern bool pump2_state;
+
 
 //Error
 void Error_Handler(void);
