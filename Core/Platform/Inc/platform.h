@@ -36,7 +36,19 @@ extern uint16_t tds_plant_water;
 extern bool pump1_state;
 extern bool pump2_state;
 
+typedef struct{
+	int offset_mkupwater;
+	int offset_blowdown;
+	int pump1_lts_per_pulse;
+	int pump2_lts_per_pulse;
+	int ratio_1;
+	int ratio_2;
+	int auto_blowdown;
+	int set_blowdown_tds;
+	int set_blowdown_in_m3;
+}settings;
 
+extern settings yorker_settings;
 //Error
 void Error_Handler(void);
 

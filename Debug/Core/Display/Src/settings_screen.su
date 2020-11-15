@@ -1,3 +1,7 @@
-settings_screen.c:30:1:__settings_selection	24	static
-settings_screen.c:38:1:__esc_settings_selection	16	static
-settings_screen.c:49:6:display_edit_settings	8	static
+settings_screen.c:31:1:__settings_selection	24	static
+settings_screen.c:39:1:__esc_settings_selection	16	static
+settings_screen.c:49:1:__select_six_digits	136	static
+settings_screen.c:64:1:__store_six_digits	248	static
+settings_screen.c:133:1:__edit_six_digits	32	static
+settings_screen.c:185:6:display_edit_settings	8	static
+settings_screen.c:362:6:display_edit_digits	8	static

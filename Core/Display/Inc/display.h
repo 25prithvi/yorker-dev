@@ -34,6 +34,7 @@ extern enum {
 extern int current_screen_state;
 extern int current_edit_settings_state;
 extern unsigned char end_char[4];
+extern int settings_semaphore;
 extern enum {
 	GOTO_HOME_SCREEN,
 	UPDATE_HOME_SCREEN,
@@ -54,6 +55,15 @@ extern enum {
 	SET_BLOWDOWN_IN_M3,
 }EDIT_SETTINGS_SCREEN_STATE;
 
+extern enum	{
+	FIRST_DIGIT,
+	SECOND_DIGIT,
+	THIRD_DIGIT,
+	FOURTH_DIGIT,
+	FIFTH_DIGIT,
+	SIXTH_DIGIT,
+}DIGITS_LOC;
+
 //KEYS
 void keys_action(void);
 
@@ -61,6 +71,7 @@ void keys_action(void);
 void (*DisplayActions)();
 void display_screens(void);
 void display_edit_settings(void);
+void display_edit_digits(void);
 
 //HOME SCREEN
 void homescreen_update(void);

@@ -26,6 +26,8 @@ uint16_t tds_plant_water = 0;
 bool pump1_state = false;
 bool pump2_state = true;
 
+settings yorker_settings = {0};
+
 
 void platform_start_yorker()
 {
