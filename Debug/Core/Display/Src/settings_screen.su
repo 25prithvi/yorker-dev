@@ -1,0 +1,3 @@
+settings_screen.c:30:1:__settings_selection	24	static
+settings_screen.c:38:1:__esc_settings_selection	16	static
+settings_screen.c:49:6:display_edit_settings	8	static

@@ -21,10 +21,10 @@ int current_screen_state = GOTO_HOME_SCREEN;
 int past_screen_state = GOTO_HOME_SCREEN;
 
 unsigned char end_char[4] = {0xff,0xff,0xff,'\0'};
-char disp_cmd[50];
+char disp_cmd[100];
 int disp_cmd_len = 0;
 
-void screen_actions(){
+void display_screens(){
 
 	switch (current_screen_state){
 
@@ -74,6 +74,11 @@ void screen_actions(){
 			lcd_send_cmd(disp_cmd,disp_cmd_len);
 			key_pressed = NONE_KEY_PRESSED;
 			current_screen_state = UPDATE_HOME_SCREEN;
+		}
+		else if(key_pressed == ENTER_KEY_PRESSED)
+		{
+			DisplayActions = display_edit_settings;
+			key_pressed = NONE_KEY_PRESSED;
 		}
 		break;
 

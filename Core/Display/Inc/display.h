@@ -32,6 +32,7 @@ extern enum {
 
 
 extern int current_screen_state;
+extern int current_edit_settings_state;
 extern unsigned char end_char[4];
 extern enum {
 	GOTO_HOME_SCREEN,
@@ -40,12 +41,26 @@ extern enum {
 	ALARMS_SCREEN,
 }SCREEN_STATE;
 
+extern enum {
+	GOTO_OFFSET_MAKE_UP_WATER,
+	OFFSET_MAKE_UP_WATER,
+	OFFSET_BLOWDOWN,
+	PUMP1_LTS_PER_PULSE,
+	PUMP2_LTS_PER_PULSE,
+	RATIO_1,
+	RATIO_2,
+	AUTO_BLOWDOWN,
+	SET_BLOWDOWN_TDS,
+	SET_BLOWDOWN_IN_M3,
+}EDIT_SETTINGS_SCREEN_STATE;
 
 //KEYS
 void keys_action(void);
 
 //DISPLAY
-void screen_actions(void);
+void (*DisplayActions)();
+void display_screens(void);
+void display_edit_settings(void);
 
 //HOME SCREEN
 void homescreen_update(void);

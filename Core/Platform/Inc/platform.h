@@ -64,6 +64,9 @@ void platform_timer_init(void);
 void platform_timer_start(void);
 void platform_timer_stop(void);
 
+//Display
+void platform_display_init(void);
+
 #ifdef __cplusplus
 }
 #endif

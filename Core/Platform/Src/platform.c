@@ -34,6 +34,7 @@ void platform_start_yorker()
 	 platform_gpio_init();
 	 platform_adc_init();
 	 platform_uart_init();
+	 platform_display_init();
 	 platform_rtc_init();
 	 platform_timer_init();
 
