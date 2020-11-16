@@ -25,6 +25,7 @@ int settings_semaphore = 0;
 static int current_digit_loc = FIRST_DIGIT;
 static uint8_t new_digits[6] = {0};
 static int new_four_digits = 0;
+static uint8_t button_state = 0;
 /*******************************************************************************
  *  PRIVATE
  ******************************************************************************/
@@ -65,6 +66,15 @@ void
 __select_four_digits(uint8_t src)
 {
 	edit_settings_cmd_len = sprintf(edit_settings_cmd,"n%d.pco=63488%s",src,end_char);
+	lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+	DisplayActions = display_edit_digits;
+	key_pressed = NONE_KEY_PRESSED;
+}
+
+void
+__select_button(uint8_t src)
+{
+	edit_settings_cmd_len = sprintf(edit_settings_cmd,"b%d.pco=63488%sb%d.pco2=63488%s",src,end_char,src,end_char);
 	lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
 	DisplayActions = display_edit_digits;
 	key_pressed = NONE_KEY_PRESSED;
@@ -271,6 +281,48 @@ __edit_four_digits(int *settings_val, uint8_t src)
 		}
 	}
 }
+
+void
+__edit_button_selection(uint8_t *settings_val)
+{
+	if(key_pressed == LEFT_KEY_PRESSED)
+	{
+		button_state = 1;
+		edit_settings_cmd_len = sprintf(edit_settings_cmd,"b1.pco=63488%sb1.pco2=63488%sb0.pco=65535%sb1.pco2=65535%s",end_char,end_char,end_char,end_char);
+		lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+		key_pressed = NONE_KEY_PRESSED;
+	}
+	else if(key_pressed == RIGHT_KEY_PRESSED)
+	{
+		button_state = 0;
+		edit_settings_cmd_len = sprintf(edit_settings_cmd,"b0.pco=63488%sb0.pco2=63488%sb1.pco=65535%sb1.pco2=65535%s",end_char,end_char,end_char,end_char);
+		lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+		key_pressed = NONE_KEY_PRESSED;
+	}
+	else if(key_pressed == ENTER_KEY_PRESSED)
+	{
+		*settings_val = button_state;
+		if(button_state == 0)
+		{
+			edit_settings_cmd_len = sprintf(edit_settings_cmd,"b0.pic=6%sb1.pic=5%sb1.pco=65535%sb1.pco2=65535%sb0.pco=65535%sb0.pco2=65535%s",end_char,end_char,end_char,end_char,end_char,end_char);
+		}
+		else if(button_state == 1)
+		{
+			edit_settings_cmd_len = sprintf(edit_settings_cmd,"b1.pic=4%sb0.pic=5%sb1.pco=65535%sb1.pco2=65535%sb0.pco=65535%sb0.pco2=65535%s",end_char,end_char,end_char,end_char,end_char,end_char);
+		}
+
+		lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+		key_pressed = NONE_KEY_PRESSED;
+		DisplayActions = display_edit_settings;
+	}
+	else if(key_pressed == ESC_KEY_PRESSED)
+	{
+		edit_settings_cmd_len = sprintf(edit_settings_cmd,"b1.pco=65535%sb1.pco2=65535%sb0.pco=65535%sb0.pco2=65535%s",end_char,end_char,end_char,end_char);
+		lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+		key_pressed = NONE_KEY_PRESSED;
+		DisplayActions = display_edit_settings;
+	}
+}
 /*******************************************************************************
  *  PUBLIC
  ******************************************************************************/
@@ -419,6 +471,10 @@ void display_edit_settings()
 			{
 				__esc_settings_selection(24);
 			}
+			else if(key_pressed == ENTER_KEY_PRESSED)
+			{
+				__select_button(0);
+			}
 			break;
 		case SET_BLOWDOWN_TDS:
 			if(key_pressed == RIGHT_KEY_PRESSED)
@@ -486,7 +542,7 @@ void display_edit_digits()
 			__edit_four_digits(&yorker_settings.ratio_2,25);
 			break;
 		case AUTO_BLOWDOWN:
-
+			__edit_button_selection(&yorker_settings.auto_blowdown);
 			break;
 		case SET_BLOWDOWN_TDS:
 			__edit_four_digits(&yorker_settings.set_blowdown_tds,26);

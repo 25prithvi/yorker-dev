@@ -43,7 +43,7 @@ typedef struct{
 	int pump2_lts_per_pulse;
 	int ratio_1;
 	int ratio_2;
-	int auto_blowdown;
+	uint8_t auto_blowdown;
 	int set_blowdown_tds;
 	int set_blowdown_in_m3;
 }settings;
