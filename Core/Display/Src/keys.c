@@ -27,7 +27,6 @@ void keys_action(){
 	}
 	else if(HAL_GPIO_ReadPin(LEFT_KEY_GPIO_Port,LEFT_KEY_Pin) == 0 && key_pressed_flag == LEFT_KEY_PRESSED)
 	{
-
 		key_pressed = LEFT_KEY_PRESSED;
 		key_pressed_flag = NONE_KEY_PRESSED;
 	}

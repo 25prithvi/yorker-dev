@@ -24,6 +24,7 @@ int edit_settings_cmd_len = 0;
 int settings_semaphore = 0;
 static int current_digit_loc = FIRST_DIGIT;
 static uint8_t new_digits[6] = {0};
+static int new_four_digits = 0;
 /*******************************************************************************
  *  PRIVATE
  ******************************************************************************/
@@ -55,6 +56,15 @@ __select_six_digits(uint8_t src)
 		select_six_digits_cmd_len += snprintf (select_six_digits_cmd+select_six_digits_cmd_len,100-select_six_digits_cmd_len,"n%d.pco=63488%s",i,end_char);
 	}
 	edit_settings_cmd_len = sprintf(edit_settings_cmd,select_six_digits_cmd);
+	lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+	DisplayActions = display_edit_digits;
+	key_pressed = NONE_KEY_PRESSED;
+}
+
+void
+__select_four_digits(uint8_t src)
+{
+	edit_settings_cmd_len = sprintf(edit_settings_cmd,"n%d.pco=63488%s",src,end_char);
 	lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
 	DisplayActions = display_edit_digits;
 	key_pressed = NONE_KEY_PRESSED;
@@ -130,6 +140,22 @@ __store_six_digits(int *set_val, uint8_t onscreen_digit_loc)
 }
 
 void
+__check_and_print_four_digits_limit(uint8_t src)
+{
+	if(new_four_digits < 0)
+	{
+		new_four_digits = 10000 + new_four_digits;
+	}
+	else if(new_four_digits > 9999)
+	{
+		new_four_digits = new_four_digits - 10000;
+	}
+	edit_settings_cmd_len = sprintf(edit_settings_cmd,"n%d.val=%d%s",src,new_four_digits,end_char);
+	lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+	key_pressed = NONE_KEY_PRESSED;
+}
+
+void
 __edit_six_digits(int *settings_val, uint8_t src)
 {
 	if(settings_semaphore == 0)
@@ -176,6 +202,72 @@ __edit_six_digits(int *settings_val, uint8_t src)
 					}
 				}
 				break;
+		}
+	}
+}
+
+void
+__edit_four_digits(int *settings_val, uint8_t src)
+{
+	if(settings_semaphore == 0)
+	{
+		settings_semaphore = 1;
+		new_four_digits = *settings_val;
+	}
+	else if(settings_semaphore == 1)
+	{
+		if(key_pressed == LEFT_KEY_PRESSED && key_pressed_flag == NONE_KEY_PRESSED)
+		{
+			new_four_digits++;
+			__check_and_print_four_digits_limit(src);
+		}
+		else if(key_pressed == RIGHT_KEY_PRESSED && key_pressed_flag == NONE_KEY_PRESSED)
+		{
+			new_four_digits--;
+			__check_and_print_four_digits_limit(src);
+		}
+		else if(key_pressed == ENTER_KEY_PRESSED && key_pressed_flag == NONE_KEY_PRESSED)
+		{
+			settings_semaphore++;
+			key_pressed = NONE_KEY_PRESSED;
+		}
+		else if(key_pressed == ESC_KEY_PRESSED && key_pressed_flag == NONE_KEY_PRESSED)
+		{
+			edit_settings_cmd_len = sprintf(edit_settings_cmd,"n%d.val=%d%sn%d.pco=0%s",src, *settings_val,end_char,src,end_char);
+			lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+			settings_semaphore = 0;
+			key_pressed = NONE_KEY_PRESSED;
+			DisplayActions = display_edit_settings;
+		}
+	}
+	else if(settings_semaphore == 2)
+	{
+		if(key_pressed == LEFT_KEY_PRESSED && key_pressed_flag == NONE_KEY_PRESSED)
+		{
+			new_four_digits+=10;
+			__check_and_print_four_digits_limit(src);
+		}
+		else if(key_pressed == RIGHT_KEY_PRESSED && key_pressed_flag == NONE_KEY_PRESSED)
+		{
+			new_four_digits-=10;
+			__check_and_print_four_digits_limit(src);
+		}
+		else if(key_pressed == ENTER_KEY_PRESSED && key_pressed_flag == NONE_KEY_PRESSED)
+		{
+			*settings_val = new_four_digits;
+			settings_semaphore=0;
+			edit_settings_cmd_len = sprintf(edit_settings_cmd,"n%d.val=%d%sn%d.pco=0%s",src, *settings_val,end_char,src,end_char);
+			lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+			key_pressed = NONE_KEY_PRESSED;
+			DisplayActions = display_edit_settings;
+		}
+		else if(key_pressed == ESC_KEY_PRESSED && key_pressed_flag == NONE_KEY_PRESSED)
+		{
+			edit_settings_cmd_len = sprintf(edit_settings_cmd,"n%d.val=%d%sn%d.pco=0%s",src, *settings_val,end_char,src,end_char);
+			lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+			settings_semaphore = 0;
+			key_pressed = NONE_KEY_PRESSED;
+			DisplayActions = display_edit_settings;
 		}
 	}
 }
@@ -287,6 +379,10 @@ void display_edit_settings()
 			{
 				__esc_settings_selection(13);
 			}
+			else if(key_pressed == ENTER_KEY_PRESSED)
+			{
+				__select_four_digits(24);
+			}
 			break;
 		case RATIO_2:
 			if(key_pressed == RIGHT_KEY_PRESSED)
@@ -302,6 +398,10 @@ void display_edit_settings()
 			else if(key_pressed == ESC_KEY_PRESSED)
 			{
 				__esc_settings_selection(29);
+			}
+			else if(key_pressed == ENTER_KEY_PRESSED)
+			{
+				__select_four_digits(25);
 			}
 			break;
 		case AUTO_BLOWDOWN:
@@ -334,6 +434,10 @@ void display_edit_settings()
 			else if(key_pressed == ESC_KEY_PRESSED)
 			{
 				__esc_settings_selection(14);
+			}
+			else if(key_pressed == ENTER_KEY_PRESSED)
+			{
+				__select_four_digits(26);
 			}
 			break;
 		case SET_BLOWDOWN_IN_M3:
@@ -376,16 +480,16 @@ void display_edit_digits()
 			__edit_six_digits(&yorker_settings.pump2_lts_per_pulse,18);
 			break;
 		case RATIO_1:
-
+			__edit_four_digits(&yorker_settings.ratio_1,24);
 			break;
 		case RATIO_2:
-
+			__edit_four_digits(&yorker_settings.ratio_2,25);
 			break;
 		case AUTO_BLOWDOWN:
 
 			break;
 		case SET_BLOWDOWN_TDS:
-
+			__edit_four_digits(&yorker_settings.set_blowdown_tds,26);
 			break;
 		case SET_BLOWDOWN_IN_M3:
 			__edit_six_digits(&yorker_settings.set_blowdown_in_m3,27);
