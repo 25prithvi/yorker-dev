@@ -36,6 +36,7 @@ extern uint16_t tds_plant_water;
 extern bool pump1_state;
 extern bool pump2_state;
 
+extern uint8_t save_settings;
 typedef struct{
 	int offset_mkupwater;
 	int offset_blowdown;
@@ -49,6 +50,14 @@ typedef struct{
 }settings;
 
 extern settings yorker_settings;
+
+typedef struct{
+	unsigned long mkup_water_added_pulse_cnt;
+	unsigned long blowdown_water_pulse_cnt;
+	unsigned int chemical_1;
+	unsigned int chemical_2;
+}homescreen_settings;
+
 //Error
 void Error_Handler(void);
 
@@ -78,6 +87,13 @@ void platform_timer_stop(void);
 
 //Display
 void platform_display_init(void);
+
+//Flash Storage
+void platform_flashcfg_init(homescreen_settings *flashcfg_yorker_homescreen_settings, settings *flashcfg_yorker_settings);
+void platform_flashcfg_set_homescreen_settings(homescreen_settings *flash_yorker_homescreen_settings);
+void platform_flashcfg_get_homescreen_settings(homescreen_settings *flash_yorker_homescreen_settings);
+void platform_flashcfg_set_yorker_settings(settings *flash_yorker_settings);
+void platform_flashcfg_get_yorker_settings(settings *flash_yorker_settings);
 
 #ifdef __cplusplus
 }

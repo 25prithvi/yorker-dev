@@ -42,8 +42,9 @@ void display_screens(){
 		}
 		else if(key_pressed == RIGHT_KEY_PRESSED)
 		{
-			disp_cmd_len = sprintf(disp_cmd,"page 1%s",end_char);
-			lcd_send_cmd(disp_cmd,disp_cmd_len);
+			settings_update();
+//			disp_cmd_len = sprintf(disp_cmd,"page 1%s",end_char);
+//			lcd_send_cmd(disp_cmd,disp_cmd_len);
 			key_pressed = NONE_KEY_PRESSED;
 			current_screen_state = SETTINGS_SCREEN;
 		}
@@ -59,7 +60,10 @@ void display_screens(){
 	case SETTINGS_SCREEN:
 		if(key_pressed == NONE_KEY_PRESSED)
 		{
-
+			if(save_settings == 2)
+			{
+				settings_update();
+			}
 		}
 		else if(key_pressed == RIGHT_KEY_PRESSED)
 		{
@@ -96,8 +100,9 @@ void display_screens(){
 		}
 		else if(key_pressed == LEFT_KEY_PRESSED)
 		{
-			disp_cmd_len = sprintf(disp_cmd,"page 1%s",end_char);
-			lcd_send_cmd(disp_cmd,disp_cmd_len);
+			settings_update();
+//			disp_cmd_len = sprintf(disp_cmd,"page 1%s",end_char);
+//			lcd_send_cmd(disp_cmd,disp_cmd_len);
 			key_pressed = NONE_KEY_PRESSED;
 			current_screen_state = SETTINGS_SCREEN;
 		}

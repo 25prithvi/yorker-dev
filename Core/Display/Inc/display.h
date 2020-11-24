@@ -76,6 +76,9 @@ void display_edit_digits(void);
 //HOME SCREEN
 void homescreen_update(void);
 
+//SETTINGS
+void settings_update(void);
+
 #ifdef __cplusplus
 }
 #endif

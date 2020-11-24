@@ -42,6 +42,10 @@ __esc_settings_selection(uint8_t src)
 {
 	edit_settings_cmd_len = sprintf(edit_settings_cmd,"t%d.pco=65535%s",src,end_char);
 	lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+	if(save_settings == 1)
+	{
+		save_settings = 2;
+	}
 	DisplayActions = display_screens;
 	key_pressed = NONE_KEY_PRESSED;
 	current_edit_settings_state = GOTO_OFFSET_MAKE_UP_WATER;
@@ -201,6 +205,7 @@ __edit_six_digits(int *settings_val, uint8_t src)
 				__store_six_digits(settings_val,src);
 				if(current_digit_loc == FIRST_DIGIT && settings_semaphore == 2)
 				{
+					save_settings = 1;
 					DisplayActions = display_edit_settings;
 					settings_semaphore = 0;
 					*settings_val = 0;
@@ -269,6 +274,7 @@ __edit_four_digits(int *settings_val, uint8_t src)
 			edit_settings_cmd_len = sprintf(edit_settings_cmd,"n%d.val=%d%sn%d.pco=0%s",src, *settings_val,end_char,src,end_char);
 			lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
 			key_pressed = NONE_KEY_PRESSED;
+			save_settings = 1;
 			DisplayActions = display_edit_settings;
 		}
 		else if(key_pressed == ESC_KEY_PRESSED && key_pressed_flag == NONE_KEY_PRESSED)
@@ -313,6 +319,7 @@ __edit_button_selection(uint8_t *settings_val)
 
 		lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
 		key_pressed = NONE_KEY_PRESSED;
+		save_settings = 1;
 		DisplayActions = display_edit_settings;
 	}
 	else if(key_pressed == ESC_KEY_PRESSED)
@@ -321,6 +328,93 @@ __edit_button_selection(uint8_t *settings_val)
 		lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
 		key_pressed = NONE_KEY_PRESSED;
 		DisplayActions = display_edit_settings;
+	}
+}
+
+void __update_offset_makeup_water_added(char *disp_mwa_cmd, int *disp_mwa_cmd_len)
+{
+	uint8_t n[6];
+	int temp = yorker_settings.offset_mkupwater;
+	for(int i = 0; i < 6; i++)
+	{
+		n[i] = temp % 10;
+		temp = temp / 10;
+		*disp_mwa_cmd_len += snprintf (disp_mwa_cmd+(*disp_mwa_cmd_len),1024-(*disp_mwa_cmd_len),"n%d.val=%d%s",i,n[i],end_char);
+	}
+}
+
+void __update_offset_blowdown_water(char *disp_mwa_cmd, int *disp_mwa_cmd_len)
+{
+	uint8_t n[6];
+	int temp = yorker_settings.offset_blowdown;
+	for(int i = 0; i < 6; i++)
+	{
+		n[i] = temp % 10;
+		temp = temp / 10;
+		*disp_mwa_cmd_len += snprintf (disp_mwa_cmd+(*disp_mwa_cmd_len),1024-(*disp_mwa_cmd_len),"n%d.val=%d%s",i+6,n[i],end_char);
+	}
+}
+
+void __update_pump1_lts_per_pulse(char *disp_mwa_cmd, int *disp_mwa_cmd_len)
+{
+	uint8_t n[6];
+	int temp = yorker_settings.pump1_lts_per_pulse;
+	for(int i = 0; i < 6; i++)
+	{
+		n[i] = temp % 10;
+		temp = temp / 10;
+		*disp_mwa_cmd_len += snprintf (disp_mwa_cmd+(*disp_mwa_cmd_len),1024-(*disp_mwa_cmd_len),"n%d.val=%d%s",i+12,n[i],end_char);
+	}
+}
+
+void __update_pump2_lts_per_pulse(char *disp_mwa_cmd, int *disp_mwa_cmd_len)
+{
+	uint8_t n[6];
+	int temp = yorker_settings.pump2_lts_per_pulse;
+	for(int i = 0; i < 6; i++)
+	{
+		n[i] = temp % 10;
+		temp = temp / 10;
+		*disp_mwa_cmd_len += snprintf (disp_mwa_cmd+(*disp_mwa_cmd_len),1024-(*disp_mwa_cmd_len),"n%d.val=%d%s",i+18,n[i],end_char);
+	}
+}
+
+void __update_ratio_1(char *disp_mwa_cmd, int *disp_mwa_cmd_len)
+{
+	*disp_mwa_cmd_len += snprintf (disp_mwa_cmd+(*disp_mwa_cmd_len),1024-(*disp_mwa_cmd_len),"n%d.val=%d%s",24,yorker_settings.ratio_1,end_char);
+}
+
+void __update_ratio_2(char *disp_mwa_cmd, int *disp_mwa_cmd_len)
+{
+	*disp_mwa_cmd_len += snprintf (disp_mwa_cmd+(*disp_mwa_cmd_len),1024-(*disp_mwa_cmd_len),"n%d.val=%d%s",25,yorker_settings.ratio_2,end_char);
+}
+
+void __update_auto_blowdown(char *disp_mwa_cmd, int *disp_mwa_cmd_len)
+{
+	if( yorker_settings.auto_blowdown == 0)
+	{
+		*disp_mwa_cmd_len += snprintf (disp_mwa_cmd+(*disp_mwa_cmd_len),1024-(*disp_mwa_cmd_len),"b0.pic=6%sb1.pic=5%sb1.pco=65535%sb1.pco2=65535%sb0.pco=65535%sb0.pco2=65535%s",end_char,end_char,end_char,end_char,end_char,end_char);
+	}
+	else if(yorker_settings.auto_blowdown == 1)
+	{
+		*disp_mwa_cmd_len += snprintf (disp_mwa_cmd+(*disp_mwa_cmd_len),1024-(*disp_mwa_cmd_len),"b1.pic=4%sb0.pic=5%sb1.pco=65535%sb1.pco2=65535%sb0.pco=65535%sb0.pco2=65535%s",end_char,end_char,end_char,end_char,end_char,end_char);
+	}
+}
+
+void __update_set_blowdown_tds(char *disp_mwa_cmd, int *disp_mwa_cmd_len)
+{
+	*disp_mwa_cmd_len += snprintf (disp_mwa_cmd+(*disp_mwa_cmd_len),1024-(*disp_mwa_cmd_len),"n%d.val=%d%s",26,yorker_settings.set_blowdown_tds,end_char);
+}
+
+void __update_set_blowdown_in_m3(char *disp_mwa_cmd, int *disp_mwa_cmd_len)
+{
+	uint8_t n[6];
+	int temp = yorker_settings.set_blowdown_in_m3;
+	for(int i = 0; i < 6; i++)
+	{
+		n[i] = temp % 10;
+		temp = temp / 10;
+		*disp_mwa_cmd_len += snprintf (disp_mwa_cmd+(*disp_mwa_cmd_len),1024-(*disp_mwa_cmd_len),"n%d.val=%d%s",i+27,n[i],end_char);
 	}
 }
 /*******************************************************************************
@@ -551,4 +645,23 @@ void display_edit_digits()
 			__edit_six_digits(&yorker_settings.set_blowdown_in_m3,27);
 			break;
 	}
+}
+
+void settings_update()
+{
+	char settings_cmd[1024] = {0};
+	int settings_cmd_len = 0;
+
+	settings_cmd_len = sprintf(settings_cmd,"page 1%s",end_char);
+	__update_offset_makeup_water_added(settings_cmd,&settings_cmd_len);
+	__update_offset_blowdown_water(settings_cmd,&settings_cmd_len);
+	__update_pump1_lts_per_pulse(settings_cmd,&settings_cmd_len);
+	__update_pump2_lts_per_pulse(settings_cmd,&settings_cmd_len);
+	__update_ratio_1(settings_cmd,&settings_cmd_len);
+	__update_ratio_2(settings_cmd,&settings_cmd_len);
+	__update_auto_blowdown(settings_cmd,&settings_cmd_len);
+	__update_set_blowdown_tds(settings_cmd,&settings_cmd_len);
+	__update_set_blowdown_in_m3(settings_cmd,&settings_cmd_len);
+
+	lcd_send_cmd(settings_cmd,settings_cmd_len);
 }

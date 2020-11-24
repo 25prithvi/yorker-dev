@@ -28,6 +28,9 @@ bool pump2_state = true;
 
 settings yorker_settings = {0};
 
+homescreen_settings yorker_homescreen_settings;
+
+uint8_t save_settings = 0;
 
 void platform_start_yorker()
 {
@@ -40,16 +43,30 @@ void platform_start_yorker()
 	 platform_rtc_init();
 	 platform_timer_init();
 
+
+
+	 platform_flashcfg_init(&yorker_homescreen_settings, &yorker_settings);
+
 	 platform_timer_start();
+
 
 	 while (1)
 	   {
 	     /* USER CODE END WHILE */
-		 HAL_Delay(500);
-		 makeup_water_added++;
-		 blowdown_water++;
-		 chemical1++;
-		 chemical2++;
+		 HAL_Delay(1000);
+		 makeup_water_added = yorker_homescreen_settings.blowdown_water_pulse_cnt;
+		 blowdown_water = yorker_homescreen_settings.blowdown_water_pulse_cnt;
+		 chemical1 = yorker_homescreen_settings.chemical_1;
+		 chemical2 = yorker_homescreen_settings.chemical_2;
+
+		 yorker_homescreen_settings.blowdown_water_pulse_cnt++;
+		 yorker_homescreen_settings.blowdown_water_pulse_cnt++;
+		 yorker_homescreen_settings.chemical_1++;
+		 yorker_homescreen_settings.chemical_2++;
+//		 makeup_water_added++;
+//		 blowdown_water++;
+//		 chemical1++;
+//		 chemical2++;
 		 ph_inlet_water++;
 		 ph_plant_water++;
 		 tds_inlet_water++;
@@ -57,6 +74,20 @@ void platform_start_yorker()
 		 pump1_state = !pump1_state;
 		 pump2_state = !pump2_state;
 
+		 if(yorker_homescreen_settings.blowdown_water_pulse_cnt != makeup_water_added)
+		 {
+			platform_timer_stop();
+			//platform_flashcfg_set_homescreen_settings(&yorker_homescreen_settings);
+			platform_timer_start();
+		 }
+
+		 if(save_settings == 2)// don't remove this
+		 {
+			platform_timer_stop();
+			platform_flashcfg_set_yorker_settings(&yorker_settings);
+			platform_timer_start();
+			save_settings = 0;
+		 }
 	     /* USER CODE BEGIN 3 */
 	   }
 }
