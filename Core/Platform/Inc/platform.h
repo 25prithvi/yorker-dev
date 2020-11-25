@@ -58,6 +58,11 @@ typedef struct{
 	unsigned int chemical_2;
 }homescreen_settings;
 
+extern homescreen_settings yorker_homescreen_settings;
+
+extern uint32_t pulse1_cnt_flag;
+extern uint32_t pulse2_cnt_flag;
+
 //Error
 void Error_Handler(void);
 

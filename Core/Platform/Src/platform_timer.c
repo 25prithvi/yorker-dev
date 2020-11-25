@@ -19,6 +19,8 @@ TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim4;
 TIM_HandleTypeDef htim5;
 
+uint32_t pulse1_cnt_flag = 0;
+uint32_t pulse2_cnt_flag = 0;
 /*******************************************************************************
  *  PRIVATE
  ******************************************************************************/
@@ -158,6 +160,34 @@ void __MX_TIM5_Init(void)
 
 }
 
+void __pulse_counter_mkup_water(void)
+{
+	if(HAL_GPIO_ReadPin(PULSE_SENS_1_GPIO_Port,PULSE_SENS_1_Pin) == 1 && pulse1_cnt_flag == 0)
+	{
+		pulse1_cnt_flag = 1;
+	}
+	else if(HAL_GPIO_ReadPin(PULSE_SENS_1_GPIO_Port,PULSE_SENS_1_Pin) == 0 && pulse1_cnt_flag == 1)
+	{
+		yorker_homescreen_settings.mkup_water_added_pulse_cnt++;
+		pulse1_cnt_flag = 0;
+	}
+
+}
+
+void __pulse_counter_blowdown_water(void)
+{
+	if(HAL_GPIO_ReadPin(PULSE_SENS_2_GPIO_Port,PULSE_SENS_2_Pin) == 1 && pulse2_cnt_flag == 0)
+	{
+		pulse2_cnt_flag = 1;
+	}
+	else if(HAL_GPIO_ReadPin(PULSE_SENS_2_GPIO_Port,PULSE_SENS_2_Pin) == 0 && pulse2_cnt_flag == 1)
+	{
+		yorker_homescreen_settings.blowdown_water_pulse_cnt++;
+		pulse2_cnt_flag = 0;
+	}
+
+}
+
 /*******************************************************************************
  *  PUBLIC
  ******************************************************************************/
@@ -186,7 +216,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == htim2.Instance)
     {
     	keys_action();
-    	//pulse_counter();
+    	__pulse_counter_mkup_water();
+    	__pulse_counter_blowdown_water();
     }
     if (htim->Instance == htim4.Instance)
 	{

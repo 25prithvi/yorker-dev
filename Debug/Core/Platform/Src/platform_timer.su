@@ -1,7 +1,9 @@
-platform_timer.c:31:6:__MX_TIM2_Init	32	static
-platform_timer.c:76:6:__MX_TIM4_Init	32	static
-platform_timer.c:121:6:__MX_TIM5_Init	32	static
-platform_timer.c:165:6:platform_timer_init	8	static
-platform_timer.c:172:6:platform_timer_start	8	static
-platform_timer.c:178:6:platform_timer_stop	8	static
-platform_timer.c:184:6:HAL_TIM_PeriodElapsedCallback	16	static
+platform_timer.c:33:6:__MX_TIM2_Init	32	static
+platform_timer.c:78:6:__MX_TIM4_Init	32	static
+platform_timer.c:123:6:__MX_TIM5_Init	32	static
+platform_timer.c:163:6:__pulse_counter_mkup_water	8	static
+platform_timer.c:177:6:__pulse_counter_blowdown_water	8	static
+platform_timer.c:195:6:platform_timer_init	8	static
+platform_timer.c:202:6:platform_timer_start	8	static
+platform_timer.c:208:6:platform_timer_stop	8	static
+platform_timer.c:214:6:HAL_TIM_PeriodElapsedCallback	16	static
