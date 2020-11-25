@@ -32,6 +32,10 @@ homescreen_settings yorker_homescreen_settings;
 
 uint8_t save_settings = 0;
 
+
+RTC_TimeTypeDef cTime = {0};
+RTC_DateTypeDef cDate = {0};
+
 void platform_start_yorker()
 {
 	 HAL_Init();
@@ -48,7 +52,6 @@ void platform_start_yorker()
 	 platform_flashcfg_init(&yorker_homescreen_settings, &yorker_settings);
 
 	 platform_timer_start();
-
 
 	 while (1)
 	   {
@@ -89,6 +92,9 @@ void platform_start_yorker()
 			save_settings = 0;
 		 }
 	     /* USER CODE BEGIN 3 */
+
+		 platform_get_date_and_time(&cDate, &cTime);
+
 	   }
 }
 

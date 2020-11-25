@@ -75,6 +75,7 @@ void platform_gpio_init(void);
 
 //RTC
 void platform_rtc_init(void);
+void platform_get_date_and_time(RTC_DateTypeDef *cDate, RTC_TimeTypeDef *cTime);
 
 //UART
 void platform_uart_init(void);
