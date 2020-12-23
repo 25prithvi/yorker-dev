@@ -48,7 +48,6 @@ void platform_start_yorker()
 	 platform_timer_init();
 
 
-
 	 platform_flashcfg_init(&yorker_homescreen_settings, &yorker_settings);
 
 	 platform_timer_start();

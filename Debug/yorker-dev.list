@@ -4527,7 +4527,6 @@ void platform_start_yorker()
  8002248:	f000 fdee 	bl	8002e28 <platform_timer_init>
 
 
-
 	 platform_flashcfg_init(&yorker_homescreen_settings, &yorker_settings);
  800224c:	493b      	ldr	r1, [pc, #236]	; (800233c <platform_start_yorker+0x114>)
  800224e:	483c      	ldr	r0, [pc, #240]	; (8002340 <platform_start_yorker+0x118>)
@@ -5356,13 +5355,13 @@ void platform_flashcfg_set_yorker_settings(settings *flash_yorker_settings)
  80026fe:	bf00      	nop
  8002700:	081e0000 	.word	0x081e0000
  8002704:	081e0008 	.word	0x081e0008
- 8002708:	081e0016 	.word	0x081e0016
- 800270c:	081e0024 	.word	0x081e0024
- 8002710:	081e0040 	.word	0x081e0040
- 8002714:	081e0048 	.word	0x081e0048
- 8002718:	081e0056 	.word	0x081e0056
- 800271c:	081e0064 	.word	0x081e0064
- 8002720:	081e0072 	.word	0x081e0072
+ 8002708:	081e0024 	.word	0x081e0024
+ 800270c:	081e0040 	.word	0x081e0040
+ 8002710:	081e0048 	.word	0x081e0048
+ 8002714:	081e0064 	.word	0x081e0064
+ 8002718:	081e0080 	.word	0x081e0080
+ 800271c:	081e0088 	.word	0x081e0088
+ 8002720:	081e0104 	.word	0x081e0104
 
 08002724 <platform_flashcfg_get_yorker_settings>:
 
@@ -5443,13 +5442,13 @@ void platform_flashcfg_get_yorker_settings(settings *flash_yorker_settings)
  80027b2:	bf00      	nop
  80027b4:	081e0000 	.word	0x081e0000
  80027b8:	081e0008 	.word	0x081e0008
- 80027bc:	081e0016 	.word	0x081e0016
- 80027c0:	081e0024 	.word	0x081e0024
- 80027c4:	081e0040 	.word	0x081e0040
- 80027c8:	081e0048 	.word	0x081e0048
- 80027cc:	081e0056 	.word	0x081e0056
- 80027d0:	081e0064 	.word	0x081e0064
- 80027d4:	081e0072 	.word	0x081e0072
+ 80027bc:	081e0024 	.word	0x081e0024
+ 80027c0:	081e0040 	.word	0x081e0040
+ 80027c4:	081e0048 	.word	0x081e0048
+ 80027c8:	081e0064 	.word	0x081e0064
+ 80027cc:	081e0080 	.word	0x081e0080
+ 80027d0:	081e0088 	.word	0x081e0088
+ 80027d4:	081e0104 	.word	0x081e0104
 
 080027d8 <__MX_GPIO_Init>:
   * @brief GPIO Initialization Function
