@@ -76,6 +76,15 @@ __select_four_digits(uint8_t src)
 }
 
 void
+__select_time(uint8_t src)
+{
+	edit_settings_cmd_len = sprintf(edit_settings_cmd,"x%d.pco=63488%s",src,end_char);
+	lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+	DisplayActions = display_edit_digits;
+	key_pressed = NONE_KEY_PRESSED;
+}
+
+void
 __select_button(uint8_t src)
 {
 	edit_settings_cmd_len = sprintf(edit_settings_cmd,"b%d.pco=63488%sb%d.pco2=63488%s",src,end_char,src,end_char);
@@ -165,6 +174,22 @@ __check_and_print_four_digits_limit(uint8_t src)
 		new_four_digits = new_four_digits - 10000;
 	}
 	edit_settings_cmd_len = sprintf(edit_settings_cmd,"n%d.val=%d%s",src,new_four_digits,end_char);
+	lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+	key_pressed = NONE_KEY_PRESSED;
+}
+
+void
+__check_and_print_time_limit(uint8_t src)
+{
+	if(new_four_digits < 0)
+	{
+		new_four_digits = 2425 + new_four_digits;
+	}
+	else if(new_four_digits > 2400)
+	{
+		new_four_digits = new_four_digits - 2425;
+	}
+	edit_settings_cmd_len = sprintf(edit_settings_cmd,"x%d.val=%d%s",src,new_four_digits,end_char);
 	lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
 	key_pressed = NONE_KEY_PRESSED;
 }
@@ -331,6 +356,52 @@ __edit_button_selection(uint8_t *settings_val)
 	}
 }
 
+void
+__edit_cool_down_time(int *settings_val, uint8_t src)
+{
+	if(settings_semaphore == 0)
+		{
+			settings_semaphore = 1;
+			new_four_digits = *settings_val;
+			if(new_four_digits % 25 !=0 )
+			{
+				new_four_digits = (new_four_digits/25) * 25;
+			}
+		}
+
+	else if(settings_semaphore == 1)
+	{
+		if(key_pressed == LEFT_KEY_PRESSED)
+		{
+			new_four_digits += 25;
+			__check_and_print_time_limit(src);
+		}
+		else if(key_pressed == RIGHT_KEY_PRESSED)
+		{
+			new_four_digits -= 25;
+			__check_and_print_time_limit(src);
+		}
+		else if(key_pressed == ENTER_KEY_PRESSED)
+		{
+			*settings_val = new_four_digits;
+			edit_settings_cmd_len = sprintf(edit_settings_cmd,"x%d.val=%d%sx%d.pco=0%s",src, *settings_val,end_char,src,end_char);
+			lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+			settings_semaphore = 0;
+			key_pressed = NONE_KEY_PRESSED;
+			save_settings = 1;
+			DisplayActions = display_edit_settings;
+		}
+		else if(key_pressed == ESC_KEY_PRESSED)
+		{
+			edit_settings_cmd_len = sprintf(edit_settings_cmd,"x%d.val=%d%sx%d.pco=0%s",src, *settings_val,end_char,src,end_char);
+			lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+			settings_semaphore = 0;
+			key_pressed = NONE_KEY_PRESSED;
+			DisplayActions = display_edit_settings;
+		}
+	}
+}
+
 void __update_offset_makeup_water_added(char *disp_mwa_cmd, int *disp_mwa_cmd_len)
 {
 	uint8_t n[6];
@@ -404,6 +475,11 @@ void __update_auto_blowdown(char *disp_mwa_cmd, int *disp_mwa_cmd_len)
 void __update_set_blowdown_tds(char *disp_mwa_cmd, int *disp_mwa_cmd_len)
 {
 	*disp_mwa_cmd_len += snprintf (disp_mwa_cmd+(*disp_mwa_cmd_len),1024-(*disp_mwa_cmd_len),"n%d.val=%d%s",26,yorker_settings.set_blowdown_tds,end_char);
+}
+
+void __update_set_cool_off_time(char *disp_cft_cmd, int *disp_cft_cmd_len)
+{
+	*disp_cft_cmd_len += snprintf (disp_cft_cmd+(*disp_cft_cmd_len),1024-(*disp_cft_cmd_len),"x%d.val=%d%s",0,yorker_settings.set_cool_off_time,end_char);
 }
 
 void __update_set_blowdown_in_m3(char *disp_mwa_cmd, int *disp_mwa_cmd_len)
@@ -573,8 +649,8 @@ void display_edit_settings()
 		case SET_BLOWDOWN_TDS:
 			if(key_pressed == RIGHT_KEY_PRESSED)
 			{
-				__settings_selection(14,18);
-				current_edit_settings_state = SET_BLOWDOWN_IN_M3;
+				__settings_selection(14,23);
+				current_edit_settings_state = SET_COOL_OFF_TIME;
 			}
 			else if(key_pressed == LEFT_KEY_PRESSED)
 			{
@@ -590,6 +666,26 @@ void display_edit_settings()
 				__select_four_digits(26);
 			}
 			break;
+		case SET_COOL_OFF_TIME:
+			if(key_pressed == RIGHT_KEY_PRESSED)
+			{
+				__settings_selection(23,18);
+				current_edit_settings_state = SET_BLOWDOWN_IN_M3;
+			}
+			else if(key_pressed == LEFT_KEY_PRESSED)
+			{
+				__settings_selection(23,14);
+				current_edit_settings_state = SET_BLOWDOWN_TDS;
+			}
+			else if(key_pressed == ESC_KEY_PRESSED)
+			{
+				__esc_settings_selection(23);
+			}
+			else if(key_pressed == ENTER_KEY_PRESSED)
+			{
+				__select_time(0);
+			}
+			break;
 		case SET_BLOWDOWN_IN_M3:
 			if(key_pressed == RIGHT_KEY_PRESSED)
 			{
@@ -598,8 +694,8 @@ void display_edit_settings()
 			}
 			else if(key_pressed == LEFT_KEY_PRESSED)
 			{
-				__settings_selection(18,14);
-				current_edit_settings_state = SET_BLOWDOWN_TDS;
+				__settings_selection(18,23);
+				current_edit_settings_state = SET_COOL_OFF_TIME;
 			}
 			else if(key_pressed == ESC_KEY_PRESSED)
 			{
@@ -641,6 +737,9 @@ void display_edit_digits()
 		case SET_BLOWDOWN_TDS:
 			__edit_four_digits(&yorker_settings.set_blowdown_tds,26);
 			break;
+		case SET_COOL_OFF_TIME:
+			__edit_cool_down_time(&yorker_settings.set_cool_off_time,0);
+			break;
 		case SET_BLOWDOWN_IN_M3:
 			__edit_six_digits(&yorker_settings.set_blowdown_in_m3,27);
 			break;
@@ -661,6 +760,7 @@ void settings_update()
 	__update_ratio_2(settings_cmd,&settings_cmd_len);
 	__update_auto_blowdown(settings_cmd,&settings_cmd_len);
 	__update_set_blowdown_tds(settings_cmd,&settings_cmd_len);
+	__update_set_cool_off_time(settings_cmd,&settings_cmd_len);
 	__update_set_blowdown_in_m3(settings_cmd,&settings_cmd_len);
 
 	lcd_send_cmd(settings_cmd,settings_cmd_len);

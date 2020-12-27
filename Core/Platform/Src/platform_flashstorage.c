@@ -33,7 +33,8 @@
 #define RATIO_2_ADDRESS						0x081E0064
 #define AUTO_BLOWDOWN_ADDRESS				0x081E0080
 #define SET_BLOWDOWN_TDS					0x081E0088
-#define SET_BLOWDOWN_IN_M3					0x081E0104
+#define SET_COOL_OFF_TIME					0x081E0104
+#define SET_BLOWDOWN_IN_M3					0x081E0120
 
 /*******************************************************************************
  *  PRIVATE
@@ -133,6 +134,7 @@ void platform_flashcfg_set_yorker_settings(settings *flash_yorker_settings)
 	__FLASH_Program_Word(RATIO_2_ADDRESS, flash_yorker_settings->ratio_2);
 	__FLASH_Program_Word(AUTO_BLOWDOWN_ADDRESS, flash_yorker_settings->auto_blowdown);
 	__FLASH_Program_Word(SET_BLOWDOWN_TDS, flash_yorker_settings->set_blowdown_tds);
+	__FLASH_Program_Word(SET_COOL_OFF_TIME, flash_yorker_settings->set_cool_off_time);
 	__FLASH_Program_Word(SET_BLOWDOWN_IN_M3, flash_yorker_settings->set_blowdown_in_m3);
 
 	HAL_Delay(2);
@@ -150,5 +152,6 @@ void platform_flashcfg_get_yorker_settings(settings *flash_yorker_settings)
 	flash_yorker_settings->ratio_2 = __FLASH_READ(RATIO_2_ADDRESS);
 	flash_yorker_settings->auto_blowdown = __FLASH_READ(AUTO_BLOWDOWN_ADDRESS);
 	flash_yorker_settings->set_blowdown_tds = __FLASH_READ(SET_BLOWDOWN_TDS);
+	flash_yorker_settings->set_cool_off_time = __FLASH_READ(SET_COOL_OFF_TIME);
 	flash_yorker_settings->set_blowdown_in_m3 = __FLASH_READ(SET_BLOWDOWN_IN_M3);
 }

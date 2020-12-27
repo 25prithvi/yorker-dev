@@ -1,7 +1,7 @@
-platform_flashstorage.c:42:6:__FLASH_Program_Word	24	static
-platform_flashstorage.c:49:10:__FLASH_READ	24	static
-platform_flashstorage.c:74:6:platform_flashcfg_init	16	static
-platform_flashstorage.c:98:6:platform_flashcfg_set_homescreen_settings	16	static
-platform_flashstorage.c:114:6:platform_flashcfg_get_homescreen_settings	16	static
-platform_flashstorage.c:122:6:platform_flashcfg_set_yorker_settings	16	static
-platform_flashstorage.c:143:6:platform_flashcfg_get_yorker_settings	16	static
+platform_flashstorage.c:43:6:__FLASH_Program_Word	24	static
+platform_flashstorage.c:50:10:__FLASH_READ	24	static
+platform_flashstorage.c:75:6:platform_flashcfg_init	16	static
+platform_flashstorage.c:99:6:platform_flashcfg_set_homescreen_settings	16	static
+platform_flashstorage.c:115:6:platform_flashcfg_get_homescreen_settings	16	static
+platform_flashstorage.c:123:6:platform_flashcfg_set_yorker_settings	16	static
+platform_flashstorage.c:145:6:platform_flashcfg_get_yorker_settings	16	static

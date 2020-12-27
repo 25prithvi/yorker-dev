@@ -46,6 +46,7 @@ typedef struct{
 	int ratio_2;
 	uint8_t auto_blowdown;
 	int set_blowdown_tds;
+	int set_cool_off_time;
 	int set_blowdown_in_m3;
 }settings;
 
