@@ -49,12 +49,12 @@ void __update_blowdown_water(char *disp_bd_cmd,int *disp_bd_cmd_len)
 
 void __update_chemical1(char *disp_che1_cmd,int *disp_che1_cmd_len)
 {
-	*disp_che1_cmd_len += snprintf (disp_che1_cmd+(*disp_che1_cmd_len),1024-(*disp_che1_cmd_len),"n12.val=%d%s",chemical1,end_char); //n12 block on display
+	*disp_che1_cmd_len += snprintf (disp_che1_cmd+(*disp_che1_cmd_len),1024-(*disp_che1_cmd_len),"x2.val=%d%s",chemical1,end_char); //n12 block on display
 }
 
 void __update_chemical2(char *disp_che2_cmd,int *disp_che2_cmd_len)
 {
-	*disp_che2_cmd_len += snprintf (disp_che2_cmd+(*disp_che2_cmd_len),1024-(*disp_che2_cmd_len),"n13.val=%d%s",chemical2,end_char); //n13 block on display
+	*disp_che2_cmd_len += snprintf (disp_che2_cmd+(*disp_che2_cmd_len),1024-(*disp_che2_cmd_len),"x3.val=%d%s",chemical2,end_char); //n13 block on display
 }
 
 void __update_ph_inlet_water(char *disp_ph_inlet_cmd,int *disp_ph_inlet_cmd_len)
