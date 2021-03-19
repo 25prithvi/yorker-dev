@@ -43,8 +43,6 @@ void display_screens(){
 		else if(key_pressed == RIGHT_KEY_PRESSED)
 		{
 			settings_update();
-//			disp_cmd_len = sprintf(disp_cmd,"page 1%s",end_char);
-//			lcd_send_cmd(disp_cmd,disp_cmd_len);
 			key_pressed = NONE_KEY_PRESSED;
 			current_screen_state = SETTINGS_SCREEN;
 		}
