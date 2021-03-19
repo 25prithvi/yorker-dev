@@ -1,0 +1,9 @@
+platform_uart.c:31:6:__MX_UART5_Init	8	static
+platform_uart.c:64:6:__MX_UART7_Init	8	static
+platform_uart.c:97:6:__MX_USART2_UART_Init	8	static
+platform_uart.c:125:6:__wifi_uart_init	8	static
+platform_uart.c:130:6:__lcd_uart_init	8	static
+platform_uart.c:135:6:__rs485_uart_init	8	static
+platform_uart.c:143:6:platform_uart_init	8	static
+platform_uart.c:150:6:lcd_send_cmd	16	static
+platform_uart.c:155:6:wifi_send_cmd	16	static

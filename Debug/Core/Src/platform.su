@@ -1,4 +1,0 @@
-platform.c:26:6:MX_ADC1_Init	24	static
-platform.c:76:6:MX_ADC2_Init	24	static
-platform.c:126:6:MX_ADC3_Init	24	static
-platform.c:171:6:test	4	static

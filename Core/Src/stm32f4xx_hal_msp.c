@@ -2,12 +2,12 @@
 /**
   ******************************************************************************
   * File Name          : stm32f4xx_hal_msp.c
-  * Description        : This file provides code for the MSP Initialization
+  * Description        : This file provides code for the MSP Initialization 
   *                      and de-Initialization codes.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -32,7 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN Define */
-
+ 
 /* USER CODE END Define */
 
 /* Private macro -------------------------------------------------------------*/
@@ -93,13 +93,14 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
   /* USER CODE END ADC1_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_ADC1_CLK_ENABLE();
-
+  
     __HAL_RCC_GPIOC_CLK_ENABLE();
-    /**ADC1 GPIO Configuration
+    /**ADC1 GPIO Configuration    
     PC0     ------> ADC1_IN10
-    PC3     ------> ADC1_IN13
+    PC1     ------> ADC1_IN11
+    PC3     ------> ADC1_IN13 
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_3;
+    GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_3;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
@@ -115,10 +116,10 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
   /* USER CODE END ADC2_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_ADC2_CLK_ENABLE();
-
+  
     __HAL_RCC_GPIOC_CLK_ENABLE();
-    /**ADC2 GPIO Configuration
-    PC1     ------> ADC2_IN11
+    /**ADC2 GPIO Configuration    
+    PC1     ------> ADC2_IN11 
     */
     GPIO_InitStruct.Pin = GPIO_PIN_1;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
@@ -136,10 +137,10 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
   /* USER CODE END ADC3_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_ADC3_CLK_ENABLE();
-
+  
     __HAL_RCC_GPIOC_CLK_ENABLE();
-    /**ADC3 GPIO Configuration
-    PC2     ------> ADC3_IN12
+    /**ADC3 GPIO Configuration    
+    PC2     ------> ADC3_IN12 
     */
     GPIO_InitStruct.Pin = GPIO_PIN_2;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
@@ -168,12 +169,13 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
   /* USER CODE END ADC1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_ADC1_CLK_DISABLE();
-
-    /**ADC1 GPIO Configuration
+  
+    /**ADC1 GPIO Configuration    
     PC0     ------> ADC1_IN10
-    PC3     ------> ADC1_IN13
+    PC1     ------> ADC1_IN11
+    PC3     ------> ADC1_IN13 
     */
-    HAL_GPIO_DeInit(GPIOC, GPIO_PIN_0|GPIO_PIN_3);
+    HAL_GPIO_DeInit(GPIOC, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_3);
 
   /* USER CODE BEGIN ADC1_MspDeInit 1 */
 
@@ -186,9 +188,9 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
   /* USER CODE END ADC2_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_ADC2_CLK_DISABLE();
-
-    /**ADC2 GPIO Configuration
-    PC1     ------> ADC2_IN11
+  
+    /**ADC2 GPIO Configuration    
+    PC1     ------> ADC2_IN11 
     */
     HAL_GPIO_DeInit(GPIOC, GPIO_PIN_1);
 
@@ -203,15 +205,80 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
   /* USER CODE END ADC3_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_ADC3_CLK_DISABLE();
-
-    /**ADC3 GPIO Configuration
-    PC2     ------> ADC3_IN12
+  
+    /**ADC3 GPIO Configuration    
+    PC2     ------> ADC3_IN12 
     */
     HAL_GPIO_DeInit(GPIOC, GPIO_PIN_2);
 
   /* USER CODE BEGIN ADC3_MspDeInit 1 */
 
   /* USER CODE END ADC3_MspDeInit 1 */
+  }
+
+}
+
+/**
+* @brief I2C MSP Initialization
+* This function configures the hardware resources used in this example
+* @param hi2c: I2C handle pointer
+* @retval None
+*/
+void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  if(hi2c->Instance==I2C1)
+  {
+  /* USER CODE BEGIN I2C1_MspInit 0 */
+
+  /* USER CODE END I2C1_MspInit 0 */
+  
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    /**I2C1 GPIO Configuration    
+    PB6     ------> I2C1_SCL
+    PB7     ------> I2C1_SDA 
+    */
+    GPIO_InitStruct.Pin = EEPROM_SCL_Pin|EEPROM_SDA_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF4_I2C1;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+    /* Peripheral clock enable */
+    __HAL_RCC_I2C1_CLK_ENABLE();
+  /* USER CODE BEGIN I2C1_MspInit 1 */
+
+  /* USER CODE END I2C1_MspInit 1 */
+  }
+
+}
+
+/**
+* @brief I2C MSP De-Initialization
+* This function freeze the hardware resources used in this example
+* @param hi2c: I2C handle pointer
+* @retval None
+*/
+void HAL_I2C_MspDeInit(I2C_HandleTypeDef* hi2c)
+{
+  if(hi2c->Instance==I2C1)
+  {
+  /* USER CODE BEGIN I2C1_MspDeInit 0 */
+
+  /* USER CODE END I2C1_MspDeInit 0 */
+    /* Peripheral clock disable */
+    __HAL_RCC_I2C1_CLK_DISABLE();
+  
+    /**I2C1 GPIO Configuration    
+    PB6     ------> I2C1_SCL
+    PB7     ------> I2C1_SDA 
+    */
+    HAL_GPIO_DeInit(GPIOB, EEPROM_SCL_Pin|EEPROM_SDA_Pin);
+
+  /* USER CODE BEGIN I2C1_MspDeInit 1 */
+
+  /* USER CODE END I2C1_MspDeInit 1 */
   }
 
 }
@@ -382,12 +449,12 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
   /* USER CODE END UART5_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_UART5_CLK_ENABLE();
-
+  
     __HAL_RCC_GPIOC_CLK_ENABLE();
     __HAL_RCC_GPIOD_CLK_ENABLE();
-    /**UART5 GPIO Configuration
+    /**UART5 GPIO Configuration    
     PC12     ------> UART5_TX
-    PD2     ------> UART5_RX
+    PD2     ------> UART5_RX 
     */
     GPIO_InitStruct.Pin = RS485_TX_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -417,11 +484,11 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
   /* USER CODE END UART7_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_UART7_CLK_ENABLE();
-
+  
     __HAL_RCC_GPIOE_CLK_ENABLE();
-    /**UART7 GPIO Configuration
+    /**UART7 GPIO Configuration    
     PE7     ------> UART7_RX
-    PE8     ------> UART7_TX
+    PE8     ------> UART7_TX 
     */
     GPIO_InitStruct.Pin = LCD_UART_RX_Pin|LCD_UART_TX_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -444,11 +511,11 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
   /* USER CODE END USART2_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_USART2_CLK_ENABLE();
-
+  
     __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**USART2 GPIO Configuration
+    /**USART2 GPIO Configuration    
     PA2     ------> USART2_TX
-    PA3     ------> USART2_RX
+    PA3     ------> USART2_RX 
     */
     GPIO_InitStruct.Pin = WIFI_UART_TX_Pin|WIFI_UART_RX_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -482,10 +549,10 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
   /* USER CODE END UART5_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_UART5_CLK_DISABLE();
-
-    /**UART5 GPIO Configuration
+  
+    /**UART5 GPIO Configuration    
     PC12     ------> UART5_TX
-    PD2     ------> UART5_RX
+    PD2     ------> UART5_RX 
     */
     HAL_GPIO_DeInit(RS485_TX_GPIO_Port, RS485_TX_Pin);
 
@@ -504,10 +571,10 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
   /* USER CODE END UART7_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_UART7_CLK_DISABLE();
-
-    /**UART7 GPIO Configuration
+  
+    /**UART7 GPIO Configuration    
     PE7     ------> UART7_RX
-    PE8     ------> UART7_TX
+    PE8     ------> UART7_TX 
     */
     HAL_GPIO_DeInit(GPIOE, LCD_UART_RX_Pin|LCD_UART_TX_Pin);
 
@@ -524,10 +591,10 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
   /* USER CODE END USART2_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_USART2_CLK_DISABLE();
-
-    /**USART2 GPIO Configuration
+  
+    /**USART2 GPIO Configuration    
     PA2     ------> USART2_TX
-    PA3     ------> USART2_RX
+    PA3     ------> USART2_RX 
     */
     HAL_GPIO_DeInit(GPIOA, WIFI_UART_TX_Pin|WIFI_UART_RX_Pin);
 
