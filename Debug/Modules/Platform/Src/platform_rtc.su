@@ -1,3 +1,3 @@
 platform_rtc.c:28:6:__MX_RTC_Init	32	static
-platform_rtc.c:88:6:platform_rtc_init	8	static
-platform_rtc.c:93:6:platform_get_date_and_time	16	static
+platform_rtc.c:87:6:platform_rtc_init	8	static
+platform_rtc.c:92:6:platform_get_date_and_time	16	static

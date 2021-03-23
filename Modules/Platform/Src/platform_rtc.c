@@ -27,7 +27,6 @@ RTC_HandleTypeDef hrtc;
   */
 void __MX_RTC_Init(void)
 {
-
   /* USER CODE BEGIN RTC_Init 0 */
 
   /* USER CODE END RTC_Init 0 */
@@ -49,7 +48,7 @@ void __MX_RTC_Init(void)
   hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
   if (HAL_RTC_Init(&hrtc) != HAL_OK)
   {
-    Error_Handler();
+	Error_Handler();
   }
 
   /* USER CODE BEGIN Check_RTC_BKUP */
@@ -58,23 +57,23 @@ void __MX_RTC_Init(void)
 
   /** Initialize RTC and set the Time and Date
   */
-  sTime.Hours = 0x22;
-  sTime.Minutes = 0x38;
+  sTime.Hours = 0x21;
+  sTime.Minutes = 0x35;
   sTime.Seconds = 0x00;
   sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
   sTime.StoreOperation = RTC_STOREOPERATION_RESET;
 //  if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BCD) != HAL_OK)
 //  {
-//    Error_Handler();
+//	Error_Handler();
 //  }
-  sDate.WeekDay = RTC_WEEKDAY_FRIDAY;
-  sDate.Month = RTC_MONTH_FEBRUARY;
-  sDate.Date = 0x26;
+  sDate.WeekDay = RTC_WEEKDAY_MONDAY;
+  sDate.Month = RTC_MONTH_MARCH;
+  sDate.Date = 0x22;
   sDate.Year = 0x21;
 
 //  if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BCD) != HAL_OK)
 //  {
-//    Error_Handler();
+//	Error_Handler();
 //  }
   /* USER CODE BEGIN RTC_Init 2 */
 

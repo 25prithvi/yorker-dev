@@ -1,2 +1,2 @@
 platform_rcc.c:25:6:__SystemClock_Config	136	static
-platform_rcc.c:71:6:platform_sysclk_cfg	8	static
+platform_rcc.c:73:6:platform_sysclk_cfg	8	static
