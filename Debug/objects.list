@@ -37,6 +37,7 @@
 "Modules/Platform/Src/platform_display.o"
 "Modules/Platform/Src/platform_flashstorage.o"
 "Modules/Platform/Src/platform_gpio.o"
+"Modules/Platform/Src/platform_i2c.o"
 "Modules/Platform/Src/platform_rcc.o"
 "Modules/Platform/Src/platform_rtc.o"
 "Modules/Platform/Src/platform_timer.o"

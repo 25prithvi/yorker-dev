@@ -114,6 +114,9 @@ void platform_flashcfg_get_homescreen_settings(homescreen_settings *flash_yorker
 void platform_flashcfg_set_yorker_settings(settings *flash_yorker_settings);
 void platform_flashcfg_get_yorker_settings(settings *flash_yorker_settings);
 
+//I2C
+void platform_i2c_init(void);
+
 #ifdef __cplusplus
 }
 #endif
