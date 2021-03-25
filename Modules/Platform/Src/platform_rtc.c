@@ -94,3 +94,8 @@ void platform_get_date_and_time(RTC_DateTypeDef *cDate, RTC_TimeTypeDef *cTime)
 	HAL_RTC_GetTime(&hrtc, cTime, RTC_FORMAT_BCD);
 	HAL_RTC_GetDate(&hrtc, cDate, RTC_FORMAT_BCD);
 }
+
+void platform_get_time(RTC_TimeTypeDef *cTime)
+{
+	HAL_RTC_GetTime(&hrtc, cTime, RTC_FORMAT_BCD);
+}

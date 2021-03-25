@@ -592,14 +592,14 @@ void __update_inlet_water_tds(char *disp_cft_cmd, int *disp_cft_cmd_len)
 	*disp_cft_cmd_len += snprintf (disp_cft_cmd+(*disp_cft_cmd_len),1024-(*disp_cft_cmd_len),"n%d.val=%d%sn%d.val=%d%s",2,yorker_settings.set_inlet_water_tds_min,end_char,3,yorker_settings.set_inlet_water_tds_max,end_char);
 }
 
-void __update_outlet_water_ph(char *disp_cft_cmd, int *disp_cft_cmd_len)
+void __update_plant_water_ph(char *disp_cft_cmd, int *disp_cft_cmd_len)
 {
-	*disp_cft_cmd_len += snprintf (disp_cft_cmd+(*disp_cft_cmd_len),1024-(*disp_cft_cmd_len),"x%d.val=%d%sx%d.val=%d%s",2,yorker_settings.set_outlet_water_ph_min,end_char,3,yorker_settings.set_outlet_water_ph_max,end_char);
+	*disp_cft_cmd_len += snprintf (disp_cft_cmd+(*disp_cft_cmd_len),1024-(*disp_cft_cmd_len),"x%d.val=%d%sx%d.val=%d%s",2,yorker_settings.set_plant_water_ph_min,end_char,3,yorker_settings.set_plant_water_ph_max,end_char);
 }
 
-void __update_outlet_water_tds(char *disp_cft_cmd, int *disp_cft_cmd_len)
+void __update_plant_water_tds(char *disp_cft_cmd, int *disp_cft_cmd_len)
 {
-	*disp_cft_cmd_len += snprintf (disp_cft_cmd+(*disp_cft_cmd_len),1024-(*disp_cft_cmd_len),"n%d.val=%d%sn%d.val=%d%s",7,yorker_settings.set_outlet_water_tds_min,end_char,6,yorker_settings.set_outlet_water_tds_max,end_char);
+	*disp_cft_cmd_len += snprintf (disp_cft_cmd+(*disp_cft_cmd_len),1024-(*disp_cft_cmd_len),"n%d.val=%d%sn%d.val=%d%s",7,yorker_settings.set_plant_water_tds_min,end_char,6,yorker_settings.set_plant_water_tds_max,end_char);
 }
 
 void __update_pump_capacity(char *disp_mwa_cmd, int *disp_mwa_cmd_len)
@@ -909,7 +909,7 @@ void display_edit_settings()
 				edit_settings_cmd_len = sprintf(edit_settings_cmd,"t8.pco=65535%sn3.bco=65535%st9.pco=63488%sx2.bco=33808%s",end_char,end_char,end_char,end_char);
 				lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
 				key_pressed = NONE_KEY_PRESSED;
-				current_edit_settings_state = SET_OUTLET_WATER_PH_MIN;
+				current_edit_settings_state = SET_PLANT_WATER_PH_MIN;
 			}
 			else if(key_pressed == LEFT_KEY_PRESSED)
 			{
@@ -927,13 +927,13 @@ void display_edit_settings()
 				__select_digits(3,0);
 			}
 			break;
-		case SET_OUTLET_WATER_PH_MIN:
+		case SET_PLANT_WATER_PH_MIN:
 			if(key_pressed == RIGHT_KEY_PRESSED)
 			{
 				edit_settings_cmd_len = sprintf(edit_settings_cmd,"x2.bco=65535%sx3.bco=33808%s",end_char,end_char);
 				lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
 				key_pressed = NONE_KEY_PRESSED;
-				current_edit_settings_state = SET_OUTLET_WATER_PH_MAX;
+				current_edit_settings_state = SET_PLANT_WATER_PH_MAX;
 			}
 			else if(key_pressed == LEFT_KEY_PRESSED)
 			{
@@ -951,20 +951,20 @@ void display_edit_settings()
 				__select_digits(2,1);
 			}
 			break;
-		case SET_OUTLET_WATER_PH_MAX:
+		case SET_PLANT_WATER_PH_MAX:
 			if(key_pressed == RIGHT_KEY_PRESSED)
 			{
 				edit_settings_cmd_len = sprintf(edit_settings_cmd,"t9.pco=65535%sx3.bco=65535%st10.pco=63488%sn7.bco=33808%s",end_char,end_char,end_char,end_char);
 				lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
 				key_pressed = NONE_KEY_PRESSED;
-				current_edit_settings_state = SET_OUTLET_WATER_TDS_MIN;
+				current_edit_settings_state = SET_PLANT_WATER_TDS_MIN;
 			}
 			else if(key_pressed == LEFT_KEY_PRESSED)
 			{
 				edit_settings_cmd_len = sprintf(edit_settings_cmd,"x3.bco=65535%sx2.bco=33808%s",end_char,end_char);
 				lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
 				key_pressed = NONE_KEY_PRESSED;
-				current_edit_settings_state = SET_OUTLET_WATER_PH_MIN;
+				current_edit_settings_state = SET_PLANT_WATER_PH_MIN;
 			}
 			else if(key_pressed == ESC_KEY_PRESSED)
 			{
@@ -975,20 +975,20 @@ void display_edit_settings()
 				__select_digits(3,1);
 			}
 			break;
-		case SET_OUTLET_WATER_TDS_MIN:
+		case SET_PLANT_WATER_TDS_MIN:
 			if(key_pressed == RIGHT_KEY_PRESSED)
 			{
 				edit_settings_cmd_len = sprintf(edit_settings_cmd,"n7.bco=65535%sn6.bco=33808%s",end_char,end_char);
 				lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
 				key_pressed = NONE_KEY_PRESSED;
-				current_edit_settings_state = SET_OUTLET_WATER_TDS_MAX;
+				current_edit_settings_state = SET_PLANT_WATER_TDS_MAX;
 			}
 			else if(key_pressed == LEFT_KEY_PRESSED)
 			{
 				edit_settings_cmd_len = sprintf(edit_settings_cmd,"t10.pco=65535%sn7.bco=65535%st9.pco=63488%sx3.bco=33808%s",end_char,end_char,end_char,end_char);
 				lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
 				key_pressed = NONE_KEY_PRESSED;
-				current_edit_settings_state = SET_OUTLET_WATER_PH_MAX;
+				current_edit_settings_state = SET_PLANT_WATER_PH_MAX;
 			}
 			else if(key_pressed == ESC_KEY_PRESSED)
 			{
@@ -999,7 +999,7 @@ void display_edit_settings()
 				__select_digits(7,0);
 			}
 			break;
-		case SET_OUTLET_WATER_TDS_MAX:
+		case SET_PLANT_WATER_TDS_MAX:
 			if(key_pressed == RIGHT_KEY_PRESSED)
 			{
 				edit_settings_cmd_len = sprintf(edit_settings_cmd,"t10.pco=65535%sn6.bco=65535%st13.pco=63488%s",end_char,end_char,end_char);
@@ -1012,7 +1012,7 @@ void display_edit_settings()
 				edit_settings_cmd_len = sprintf(edit_settings_cmd,"n6.bco=65535%sn7.bco=33808%s",end_char,end_char);
 				lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
 				key_pressed = NONE_KEY_PRESSED;
-				current_edit_settings_state = SET_OUTLET_WATER_TDS_MIN;
+				current_edit_settings_state = SET_PLANT_WATER_TDS_MIN;
 			}
 			else if(key_pressed == ESC_KEY_PRESSED)
 			{
@@ -1036,7 +1036,7 @@ void display_edit_settings()
 				edit_settings_cmd_len = sprintf(edit_settings_cmd,"t13.pco=65535%st10.pco=63488%sn6.bco=33808%s",end_char,end_char,end_char);
 				lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
 				key_pressed = NONE_KEY_PRESSED;
-				current_edit_settings_state = SET_OUTLET_WATER_TDS_MAX;
+				current_edit_settings_state = SET_PLANT_WATER_TDS_MAX;
 			}
 			else if(key_pressed == ESC_KEY_PRESSED)
 			{
@@ -1144,17 +1144,17 @@ void display_edit_digits()
 		case SET_INLET_WATER_TDS_MAX:
 			__edit_digits(&yorker_settings.set_inlet_water_tds_max,3,4,0,0);
 			break;
-		case SET_OUTLET_WATER_PH_MIN:
-			__edit_digits(&yorker_settings.set_outlet_water_ph_min,2,2,1,1);
+		case SET_PLANT_WATER_PH_MIN:
+			__edit_digits(&yorker_settings.set_plant_water_ph_min,2,2,1,1);
 			break;
-		case SET_OUTLET_WATER_PH_MAX:
-			__edit_digits(&yorker_settings.set_outlet_water_ph_max,3,2,1,1);
+		case SET_PLANT_WATER_PH_MAX:
+			__edit_digits(&yorker_settings.set_plant_water_ph_max,3,2,1,1);
 			break;
-		case SET_OUTLET_WATER_TDS_MIN:
-			__edit_digits(&yorker_settings.set_outlet_water_tds_min,7,4,0,0);
+		case SET_PLANT_WATER_TDS_MIN:
+			__edit_digits(&yorker_settings.set_plant_water_tds_min,7,4,0,0);
 			break;
-		case SET_OUTLET_WATER_TDS_MAX:
-			__edit_digits(&yorker_settings.set_outlet_water_tds_max,6,4,0,0);
+		case SET_PLANT_WATER_TDS_MAX:
+			__edit_digits(&yorker_settings.set_plant_water_tds_max,6,4,0,0);
 			break;
 		case PUMP1_CAPACITY:
 			__edit_digits(&yorker_settings.pump1_capacity,8,2,0,0);
@@ -1196,8 +1196,8 @@ void settings2_update()
 	settings_cmd_len = sprintf(settings_cmd,"page 3%s",end_char);
 	__update_inlet_water_ph(settings_cmd,&settings_cmd_len);
 	__update_inlet_water_tds(settings_cmd,&settings_cmd_len);
-	__update_outlet_water_ph(settings_cmd,&settings_cmd_len);
-	__update_outlet_water_tds(settings_cmd,&settings_cmd_len);
+	__update_plant_water_ph(settings_cmd,&settings_cmd_len);
+	__update_plant_water_tds(settings_cmd,&settings_cmd_len);
 	__update_pump_capacity(settings_cmd,&settings_cmd_len);
 	__update_processing_rate(settings_cmd,&settings_cmd_len);
 

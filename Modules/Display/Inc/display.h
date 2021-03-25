@@ -60,10 +60,10 @@ extern enum {
 	SET_INLET_WATER_PH_MAX,
 	SET_INLET_WATER_TDS_MIN,
 	SET_INLET_WATER_TDS_MAX,
-	SET_OUTLET_WATER_PH_MIN,
-	SET_OUTLET_WATER_PH_MAX,
-	SET_OUTLET_WATER_TDS_MIN,
-	SET_OUTLET_WATER_TDS_MAX,
+	SET_PLANT_WATER_PH_MIN,
+	SET_PLANT_WATER_PH_MAX,
+	SET_PLANT_WATER_TDS_MIN,
+	SET_PLANT_WATER_TDS_MAX,
 	PUMP1_CAPACITY,
 	PUMP2_CAPACITY,
 	PROCESSING_RATE,
@@ -93,6 +93,9 @@ void homescreen_update(void);
 //SETTINGS
 void settings_update(void);
 void settings2_update(void);
+
+//ALARMS
+void alarms_screen_update(void);
 
 #ifdef __cplusplus
 }

@@ -129,6 +129,7 @@ void platform_start_yorker()
 			 wifi_cmd_len = sprintf(wifi_cmd, "waterQuality={\"WaterQualityDateTime\":\"20%02x-%02x-%02xT%02x:%02x:%02x\",\"MakeUpWater\":%d,\"BlowdownWater\":%d,\"pHInletWater\":%0.1f,\"pHPlantWater\":%0.1f,\"TDSInletWater\":%d,\"TDSPlantWater\":%d,\"DosingSystemID\":1003,\"WaterQualityChemicals\":[{\"ChemicalID\":3,\"Chemicalkgs\":1.1,\"PumpStatus\":true,\"TankStatus\":1},{\"ChemicalID\":4,\"Chemicalkgs\":0.6,\"PumpStatus\":true,\"TankStatus\":1}]}",cDate.Year,cDate.Month,cDate.Date,cTime.Hours,cTime.Minutes,cTime.Seconds,makeup_water_added,blowdown_water,(ph_inlet_water/10.0),(ph_plant_water/10.0),tds_inlet_water,tds_plant_water);
 			 wifi_send_cmd(wifi_cmd,wifi_cmd_len);
 		 }
+		 platform_check_alarms();
 	   }
 }
 

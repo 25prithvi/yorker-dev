@@ -48,8 +48,9 @@ void display_screens(){
 		}
 		else if(key_pressed == LEFT_KEY_PRESSED)
 		{
-			disp_cmd_len = sprintf(disp_cmd,"page 4%s",end_char);
-			lcd_send_cmd(disp_cmd,disp_cmd_len);
+			alarms_screen_update();
+//			disp_cmd_len = sprintf(disp_cmd,"page 4%s",end_char);
+//			lcd_send_cmd(disp_cmd,disp_cmd_len);
 			key_pressed = NONE_KEY_PRESSED;
 			current_screen_state = ALARMS_SCREEN;
 		}
@@ -95,8 +96,9 @@ void display_screens(){
 		}
 		else if(key_pressed == RIGHT_KEY_PRESSED)
 		{
-			disp_cmd_len = sprintf(disp_cmd,"page 4%s",end_char);
-			lcd_send_cmd(disp_cmd,disp_cmd_len);
+			alarms_screen_update();
+//			disp_cmd_len = sprintf(disp_cmd,"page 4%s",end_char);
+//			lcd_send_cmd(disp_cmd,disp_cmd_len);
 			key_pressed = NONE_KEY_PRESSED;
 			current_screen_state = ALARMS_SCREEN;
 		}
@@ -118,7 +120,10 @@ void display_screens(){
 	case ALARMS_SCREEN:
 		if(key_pressed == NONE_KEY_PRESSED)
 		{
-
+			if(active_alarms_updated == 1)
+			{
+				alarms_screen_update();
+			}
 		}
 		else if(key_pressed == RIGHT_KEY_PRESSED)
 		{

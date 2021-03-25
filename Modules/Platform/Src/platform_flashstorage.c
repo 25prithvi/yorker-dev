@@ -40,10 +40,10 @@
 #define SET_INLET_WATER_PH_MAX_ADDRESS		0x081E0144
 #define SET_INLET_WATER_TDS_MIN_ADDRESS		0x081E0160
 #define SET_INLET_WATER_TDS_MAX_ADDRESS		0x081E0168
-#define SET_OUTLET_WATER_PH_MIN_ADDRESS		0x081E0184
-#define SET_OUTLET_WATER_PH_MAX_ADDRESS		0x081E0200
-#define SET_OUTLET_WATER_TDS_MIN_ADDRESS	0x081E0208
-#define SET_OUTLET_WATER_TDS_MAX_ADDRESS	0x081E0224
+#define SET_PLANT_WATER_PH_MIN_ADDRESS		0x081E0184
+#define SET_PLANT_WATER_PH_MAX_ADDRESS		0x081E0200
+#define SET_PLANT_WATER_TDS_MIN_ADDRESS		0x081E0208
+#define SET_PLANT_WATER_TDS_MAX_ADDRESS		0x081E0224
 #define PUMP1_CAPACITY_ADDRESS				0x081E0240
 #define PUMP2_CAPACITY_ADDRESS				0x081E0248
 #define PROCESSING_RATE_ADDRESS				0x081E0264
@@ -153,10 +153,10 @@ void platform_flashcfg_set_yorker_settings(settings *flash_yorker_settings)
 	__FLASH_Program_Word(SET_INLET_WATER_PH_MAX_ADDRESS, flash_yorker_settings->set_inlet_water_ph_max);
 	__FLASH_Program_Word(SET_INLET_WATER_TDS_MIN_ADDRESS, flash_yorker_settings->set_inlet_water_tds_min);
 	__FLASH_Program_Word(SET_INLET_WATER_TDS_MAX_ADDRESS, flash_yorker_settings->set_inlet_water_tds_max);
-	__FLASH_Program_Word(SET_OUTLET_WATER_PH_MIN_ADDRESS, flash_yorker_settings->set_outlet_water_ph_min);
-	__FLASH_Program_Word(SET_OUTLET_WATER_PH_MAX_ADDRESS, flash_yorker_settings->set_outlet_water_ph_max);
-	__FLASH_Program_Word(SET_OUTLET_WATER_TDS_MIN_ADDRESS, flash_yorker_settings->set_outlet_water_tds_min);
-	__FLASH_Program_Word(SET_OUTLET_WATER_TDS_MAX_ADDRESS, flash_yorker_settings->set_outlet_water_tds_max);
+	__FLASH_Program_Word(SET_PLANT_WATER_PH_MIN_ADDRESS, flash_yorker_settings->set_plant_water_ph_min);
+	__FLASH_Program_Word(SET_PLANT_WATER_PH_MAX_ADDRESS, flash_yorker_settings->set_plant_water_ph_max);
+	__FLASH_Program_Word(SET_PLANT_WATER_TDS_MIN_ADDRESS, flash_yorker_settings->set_plant_water_tds_min);
+	__FLASH_Program_Word(SET_PLANT_WATER_TDS_MAX_ADDRESS, flash_yorker_settings->set_plant_water_tds_max);
 	__FLASH_Program_Word(PUMP1_CAPACITY_ADDRESS, flash_yorker_settings->pump1_capacity);
 	__FLASH_Program_Word(PUMP2_CAPACITY_ADDRESS, flash_yorker_settings->pump2_capacity);
 	__FLASH_Program_Word(PROCESSING_RATE_ADDRESS, flash_yorker_settings->processing_rate);
@@ -182,10 +182,10 @@ void platform_flashcfg_get_yorker_settings(settings *flash_yorker_settings)
 	flash_yorker_settings->set_inlet_water_ph_max = __FLASH_READ(SET_INLET_WATER_PH_MAX_ADDRESS);
 	flash_yorker_settings->set_inlet_water_tds_min = __FLASH_READ(SET_INLET_WATER_TDS_MIN_ADDRESS);
 	flash_yorker_settings->set_inlet_water_tds_max = __FLASH_READ(SET_INLET_WATER_TDS_MAX_ADDRESS);
-	flash_yorker_settings->set_outlet_water_ph_min = __FLASH_READ(SET_OUTLET_WATER_PH_MIN_ADDRESS);
-	flash_yorker_settings->set_outlet_water_ph_max = __FLASH_READ(SET_OUTLET_WATER_PH_MAX_ADDRESS);
-	flash_yorker_settings->set_outlet_water_tds_min = __FLASH_READ(SET_OUTLET_WATER_TDS_MIN_ADDRESS);
-	flash_yorker_settings->set_outlet_water_tds_max = __FLASH_READ(SET_OUTLET_WATER_TDS_MAX_ADDRESS);
+	flash_yorker_settings->set_plant_water_ph_min = __FLASH_READ(SET_PLANT_WATER_PH_MIN_ADDRESS);
+	flash_yorker_settings->set_plant_water_ph_max = __FLASH_READ(SET_PLANT_WATER_PH_MAX_ADDRESS);
+	flash_yorker_settings->set_plant_water_tds_min = __FLASH_READ(SET_PLANT_WATER_TDS_MIN_ADDRESS);
+	flash_yorker_settings->set_plant_water_tds_max = __FLASH_READ(SET_PLANT_WATER_TDS_MAX_ADDRESS);
 	flash_yorker_settings->pump1_capacity = __FLASH_READ(PUMP1_CAPACITY_ADDRESS);
 	flash_yorker_settings->pump2_capacity = __FLASH_READ(PUMP2_CAPACITY_ADDRESS);
 	flash_yorker_settings->processing_rate = __FLASH_READ(PROCESSING_RATE_ADDRESS);

@@ -1,0 +1,12 @@
+platform_alarms.c:44:1:__trigger_time_elapsed	16	static
+platform_alarms.c:61:1:__add_to_active_alerts	24	static
+platform_alarms.c:84:1:__check_chemical1_low_alert	4	static
+platform_alarms.c:105:1:__check_chemical2_low_alert	4	static
+platform_alarms.c:126:1:__check_inlet_water_ph_high_alert	40	static
+platform_alarms.c:146:1:__check_plant_water_ph_high_alert	40	static
+platform_alarms.c:165:1:__check_inlet_water_ph_low_alert	40	static
+platform_alarms.c:185:1:__check_plant_water_ph_low_alert	40	static
+platform_alarms.c:204:1:__check_inlet_water_tds_high_alert	40	static
+platform_alarms.c:224:1:__check_plant_water_tds_high_alert	40	static
+platform_alarms.c:243:1:__check_plat_water_ab_complete_alert	4	static
+platform_alarms.c:265:6:platform_check_alarms	8	static

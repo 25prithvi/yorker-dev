@@ -1,0 +1,2 @@
+alarms_screen.c:27:6:__update_alarms	56	static
+alarms_screen.c:91:6:alarms_screen_update	1040	static

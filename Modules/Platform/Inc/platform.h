@@ -52,10 +52,10 @@ typedef struct{
 	int set_inlet_water_ph_max;
 	int set_inlet_water_tds_min;
 	int set_inlet_water_tds_max;
-	int set_outlet_water_ph_min;
-	int set_outlet_water_ph_max;
-	int set_outlet_water_tds_min;
-	int set_outlet_water_tds_max;
+	int set_plant_water_ph_min;
+	int set_plant_water_ph_max;
+	int set_plant_water_tds_min;
+	int set_plant_water_tds_max;
 	int pump1_capacity;
 	int pump2_capacity;
 	int processing_rate;
@@ -72,6 +72,39 @@ typedef struct{
 
 extern homescreen_settings yorker_homescreen_settings;
 
+typedef struct{
+	uint8_t flag;
+	uint8_t date;
+	uint8_t month;
+	uint8_t year;
+	uint8_t hours;
+	uint8_t mins;
+	uint8_t alert;
+}alerts;
+
+#define SIZE_OF_ACTIVE_ALARMS 10
+extern alerts active_alarms[SIZE_OF_ACTIVE_ALARMS];
+extern uint8_t active_alarms_updated;
+
+enum {
+	NO_ALERT,
+	DETECTS_ALERT,
+	CONFIRMS_ALERT,
+	DETECTS_ACTION_TAKEN,
+	CONFIRMS_ACTION_TAKEN,
+}ALARM_STATE;
+
+enum {
+	CHEMICAL1_LOW,
+	CHEMICAL2_LOW,
+	INLET_WATER_PH_HIGH,
+	PLANT_WATER_PH_HIGH,
+	INLET_WATER_PH_LOW,
+	PLANT_WATER_PH_LOW,
+	INLET_WATER_TDS_HIGH,
+	PLANT_WATER_TDS_HIGH,
+	PLANT_WATER_AB_COMPLETE,
+}ALARM_TYPES;
 extern uint32_t pulse1_cnt_flag;
 extern uint32_t pulse2_cnt_flag;
 
@@ -93,6 +126,7 @@ void platform_gpio_init(void);
 //RTC
 void platform_rtc_init(void);
 void platform_get_date_and_time(RTC_DateTypeDef *cDate, RTC_TimeTypeDef *cTime);
+void platform_get_time(RTC_TimeTypeDef *cTime);
 
 //UART
 void platform_uart_init(void);
@@ -116,6 +150,9 @@ void platform_flashcfg_get_yorker_settings(settings *flash_yorker_settings);
 
 //I2C
 void platform_i2c_init(void);
+
+//Alarms
+void platform_check_alarms(void);
 
 #ifdef __cplusplus
 }
