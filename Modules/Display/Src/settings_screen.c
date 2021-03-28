@@ -843,8 +843,10 @@ void display_edit_settings()
 			}
 			else if(key_pressed == LEFT_KEY_PRESSED)
 			{
-//				__settings_selection(18,23);
-//				current_edit_settings_state = SET_COOL_OFF_TIME;
+				edit_settings_cmd_len = sprintf(edit_settings_cmd,"t7.pco=65535%sx0.bco=65535%st15.pco=63488%s",end_char,end_char,end_char);
+				lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+				key_pressed = NONE_KEY_PRESSED;
+				current_edit_settings_state = PROCESSING_RATE;
 			}
 			else if(key_pressed == ESC_KEY_PRESSED)
 			{
@@ -1074,10 +1076,10 @@ void display_edit_settings()
 		case PROCESSING_RATE:
 			if(key_pressed == RIGHT_KEY_PRESSED)
 			{
-//				edit_settings_cmd_len = sprintf(edit_settings_cmd,"n6.bco=65535%st13.pco=63488%s",end_char,end_char);
-//				lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
-//				key_pressed = NONE_KEY_PRESSED;
-//				current_edit_settings_state = PUMP1_CAPACITY;
+				edit_settings_cmd_len = sprintf(edit_settings_cmd,"t15.pco=65535%st7.pco=63488%sx0.bco=33808%s",end_char,end_char,end_char);
+				lcd_send_cmd(edit_settings_cmd,edit_settings_cmd_len);
+				key_pressed = NONE_KEY_PRESSED;
+				current_edit_settings_state = SET_INLET_WATER_PH_MIN;
 			}
 			else if(key_pressed == LEFT_KEY_PRESSED)
 			{

@@ -113,6 +113,15 @@ void platform_start_yorker()
 			platform_timer_start();
 			save_settings = 0;
 		 }
+
+		 if(history_alarms_updated >= 1)
+		 {
+			platform_timer_stop();
+			platform_flashcfg_set_history_alarms();
+			platform_timer_start();
+			history_alarms_updated = 0;
+		 }
+
 	     /* USER CODE BEGIN 3 */
 
 		 platform_get_date_and_time(&cDate, &cTime);

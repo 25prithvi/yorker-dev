@@ -48,11 +48,11 @@ void display_screens(){
 		}
 		else if(key_pressed == LEFT_KEY_PRESSED)
 		{
-			alarms_screen_update();
-//			disp_cmd_len = sprintf(disp_cmd,"page 4%s",end_char);
+			history_alarms_screen_update();
+//			disp_cmd_len = sprintf(disp_cmd,"page 5%s",end_char);
 //			lcd_send_cmd(disp_cmd,disp_cmd_len);
 			key_pressed = NONE_KEY_PRESSED;
-			current_screen_state = ALARMS_SCREEN;
+			current_screen_state = HISTORY_ALARMS_SCREEN;
 		}
 		break;
 
@@ -96,11 +96,11 @@ void display_screens(){
 		}
 		else if(key_pressed == RIGHT_KEY_PRESSED)
 		{
-			alarms_screen_update();
+			active_alarms_screen_update();
 //			disp_cmd_len = sprintf(disp_cmd,"page 4%s",end_char);
 //			lcd_send_cmd(disp_cmd,disp_cmd_len);
 			key_pressed = NONE_KEY_PRESSED;
-			current_screen_state = ALARMS_SCREEN;
+			current_screen_state = ACTIVE_ALARMS_SCREEN;
 		}
 		else if(key_pressed == LEFT_KEY_PRESSED)
 		{
@@ -117,12 +117,38 @@ void display_screens(){
 		}
 		break;
 
-	case ALARMS_SCREEN:
+	case ACTIVE_ALARMS_SCREEN:
 		if(key_pressed == NONE_KEY_PRESSED)
 		{
 			if(active_alarms_updated == 1)
 			{
-				alarms_screen_update();
+				active_alarms_screen_update();
+			}
+		}
+		else if(key_pressed == RIGHT_KEY_PRESSED)
+		{
+			history_alarms_screen_update();
+//			disp_cmd_len = sprintf(disp_cmd,"page 5%s",end_char);
+//			lcd_send_cmd(disp_cmd,disp_cmd_len);
+			key_pressed = NONE_KEY_PRESSED;
+			current_screen_state = HISTORY_ALARMS_SCREEN;
+		}
+		else if(key_pressed == LEFT_KEY_PRESSED)
+		{
+			settings2_update();
+//			disp_cmd_len = sprintf(disp_cmd,"page 2%s",end_char);
+//			lcd_send_cmd(disp_cmd,disp_cmd_len);
+			key_pressed = NONE_KEY_PRESSED;
+			current_screen_state = SETTINGS_SCREEN2;
+		}
+		break;
+
+	case HISTORY_ALARMS_SCREEN:
+		if(key_pressed == NONE_KEY_PRESSED)
+		{
+			if(history_alarms_updated == 1)
+			{
+				history_alarms_screen_update();
 			}
 		}
 		else if(key_pressed == RIGHT_KEY_PRESSED)
@@ -134,11 +160,11 @@ void display_screens(){
 		}
 		else if(key_pressed == LEFT_KEY_PRESSED)
 		{
-			settings2_update();
+			active_alarms_screen_update();
 //			disp_cmd_len = sprintf(disp_cmd,"page 2%s",end_char);
 //			lcd_send_cmd(disp_cmd,disp_cmd_len);
 			key_pressed = NONE_KEY_PRESSED;
-			current_screen_state = SETTINGS_SCREEN2;
+			current_screen_state = ACTIVE_ALARMS_SCREEN;
 		}
 		break;
 

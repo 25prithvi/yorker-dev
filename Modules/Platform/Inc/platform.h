@@ -84,7 +84,9 @@ typedef struct{
 
 #define SIZE_OF_ACTIVE_ALARMS 10
 extern alerts active_alarms[SIZE_OF_ACTIVE_ALARMS];
+extern alerts history_alarms[SIZE_OF_ACTIVE_ALARMS];
 extern uint8_t active_alarms_updated;
+extern uint8_t history_alarms_updated;
 
 enum {
 	NO_ALERT,
@@ -147,6 +149,8 @@ void platform_flashcfg_set_homescreen_settings(homescreen_settings *flash_yorker
 void platform_flashcfg_get_homescreen_settings(homescreen_settings *flash_yorker_homescreen_settings);
 void platform_flashcfg_set_yorker_settings(settings *flash_yorker_settings);
 void platform_flashcfg_get_yorker_settings(settings *flash_yorker_settings);
+void platform_flashcfg_set_history_alarms(void);
+void platform_flashcfg_get_history_alarms(void);
 
 //I2C
 void platform_i2c_init(void);

@@ -40,7 +40,8 @@ extern enum {
 	UPDATE_HOME_SCREEN,
 	SETTINGS_SCREEN,
 	SETTINGS_SCREEN2,
-	ALARMS_SCREEN,
+	ACTIVE_ALARMS_SCREEN,
+	HISTORY_ALARMS_SCREEN,
 }SCREEN_STATE;
 
 extern enum {
@@ -95,7 +96,8 @@ void settings_update(void);
 void settings2_update(void);
 
 //ALARMS
-void alarms_screen_update(void);
+void active_alarms_screen_update(void);
+void history_alarms_screen_update(void);
 
 #ifdef __cplusplus
 }

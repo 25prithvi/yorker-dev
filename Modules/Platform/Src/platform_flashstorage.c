@@ -16,7 +16,6 @@
 #include "stm32f4xx_hal.h"
 
 //Initialise
-#define FLASHCFG_INIT_ADDRESS						0x081D0000
 
 //Homescreen
 #define MKUP_WATER_ADDED_PULSE_CNT_ADDRESS	0x081B0000
@@ -48,6 +47,14 @@
 #define PUMP2_CAPACITY_ADDRESS				0x081E0248
 #define PROCESSING_RATE_ADDRESS				0x081E0264
 
+//HISTORY ALARMS
+#define HISTORY_ALARMS_FLAG_ADDRESS			0x081C0000
+#define HISTORY_ALARMS_DATE_ADDRESS			0x081C0004
+#define HISTORY_ALARMS_MONTH_ADDRESS		0x081C0008
+#define HISTORY_ALARMS_YEAR_ADDRESS			0x081C000C
+#define HISTORY_ALARMS_HOURS_ADDRESS		0x081C0010
+#define HISTORY_ALARMS_MINS_ADDRESS			0x081C0014
+#define HISTORY_ALARMS_ALERT_ADDRESS		0x081C0018
 
 /*******************************************************************************
  *  PRIVATE
@@ -106,6 +113,7 @@ void platform_flashcfg_init(homescreen_settings *flashcfg_yorker_homescreen_sett
 //	{
 		platform_flashcfg_get_homescreen_settings(flashcfg_yorker_homescreen_settings);
 		platform_flashcfg_get_yorker_settings(flashcfg_yorker_settings);
+		platform_flashcfg_get_history_alarms();
 //	}
 }
 
@@ -189,4 +197,41 @@ void platform_flashcfg_get_yorker_settings(settings *flash_yorker_settings)
 	flash_yorker_settings->pump1_capacity = __FLASH_READ(PUMP1_CAPACITY_ADDRESS);
 	flash_yorker_settings->pump2_capacity = __FLASH_READ(PUMP2_CAPACITY_ADDRESS);
 	flash_yorker_settings->processing_rate = __FLASH_READ(PROCESSING_RATE_ADDRESS);
+
+}
+
+void platform_flashcfg_set_history_alarms()
+{
+	HAL_FLASH_Unlock();
+
+	FLASH_Erase_Sector(FLASH_SECTOR_22,FLASH_VOLTAGE_RANGE_3);
+
+	for(int i = 0; i < SIZE_OF_ACTIVE_ALARMS; i++)
+	{
+		__FLASH_Program_Word(HISTORY_ALARMS_FLAG_ADDRESS + (i * 0x1C), history_alarms[i].flag);
+		__FLASH_Program_Word(HISTORY_ALARMS_DATE_ADDRESS + (i * 0x1C), history_alarms[i].date);
+		__FLASH_Program_Word(HISTORY_ALARMS_MONTH_ADDRESS + (i * 0x1C), history_alarms[i].month);
+		__FLASH_Program_Word(HISTORY_ALARMS_YEAR_ADDRESS + (i * 0x1C), history_alarms[i].year);
+		__FLASH_Program_Word(HISTORY_ALARMS_HOURS_ADDRESS + (i * 0x1C), history_alarms[i].hours);
+		__FLASH_Program_Word(HISTORY_ALARMS_MINS_ADDRESS + (i * 0x1C), history_alarms[i].mins);
+		__FLASH_Program_Word(HISTORY_ALARMS_ALERT_ADDRESS + (i * 0x1C), history_alarms[i].alert);
+	}
+
+	HAL_Delay(2);
+
+	HAL_FLASH_Lock();
+}
+
+void platform_flashcfg_get_history_alarms()
+{
+	for(int i = 0; i < SIZE_OF_ACTIVE_ALARMS; i++)
+	{
+		history_alarms[i].flag = __FLASH_READ(HISTORY_ALARMS_FLAG_ADDRESS + (i * 0x1C));
+		history_alarms[i].date = __FLASH_READ(HISTORY_ALARMS_DATE_ADDRESS + (i * 0x1C));
+		history_alarms[i].month = __FLASH_READ(HISTORY_ALARMS_MONTH_ADDRESS + (i * 0x1C));
+		history_alarms[i].year = __FLASH_READ(HISTORY_ALARMS_YEAR_ADDRESS + (i * 0x1C));
+		history_alarms[i].hours = __FLASH_READ(HISTORY_ALARMS_HOURS_ADDRESS + (i * 0x1C));
+		history_alarms[i].mins = __FLASH_READ(HISTORY_ALARMS_MINS_ADDRESS + (i * 0x1C));
+		history_alarms[i].alert = __FLASH_READ(HISTORY_ALARMS_ALERT_ADDRESS + (i * 0x1C));
+	}
 }
